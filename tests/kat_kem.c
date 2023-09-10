@@ -66,8 +66,9 @@ static void freadBstr(FILE *fp, uint8_t *A, size_t L)
 	}
 	else
 	{
-		fprintf(stderr, "Read file error");
+		fprintf(stderr, "Read file error\n");
 	}
+	free(m);
 
 	/*for (size_t i = 0; i < L; i++)
 	{
@@ -132,6 +133,11 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 	{
 		fprintf(stdout, "keypair need\n");
 	}
+	if (fm==NULL)
+	{
+		fprintf(stderr, "No message file\n");
+		return EXIT_FAILURE;
+	}
 	fprintf(fh, "starting KEM algirhtm\n");
 	if (device == 2 && fp == NULL)
 	{
@@ -152,7 +158,7 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 		}
 		fprintBstr(fpk, "", public_key, kem->length_public_key);
 		fprintBstr(fsk, "", secret_key, kem->length_secret_key);
-		fprintBstr(fh, "pk=", public_key, kem->length_public_key);
+		fprintBstr(fh, "pk = ", public_key, kem->length_public_key);
 		// fprintBstr(fh, "sk=", secret_key, kem->length_secret_key);
 		fclose(fpk);
 		fclose(fsk);
