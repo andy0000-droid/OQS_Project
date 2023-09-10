@@ -59,7 +59,7 @@ static void freadBstr(FILE *fp, uint8_t *A, size_t L)
 	m = malloc(L);
 	memset(m, 0, L);
 	size_t size = fread(m, sizeof(uint8_t), L, fp);
-	if (size == L)
+	if (size <= L)
 	{
 		memcpy(A, m, L);
 		// fprintBstr(stdout, "file: ", A, L);
@@ -163,13 +163,9 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 	}
 	if (device == 1 || device == 0)
 	{
-		if (fm == NULL )
+		if (fm == NULL)
 		{
 			fprintf(stderr, "No message file\n");
-			return EXIT_FAILURE;
-		}
-		if (fm == NULL){
-			fprintf(stderr, "input File name");
 			return EXIT_FAILURE;
 		}
 
@@ -190,7 +186,7 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 		fss = fopen("shared_secret.txt", "wb");
 
 		freadBstr(fp, public_key, kem->length_public_key);
-		fprintBstr(fh, "pk=", public_key, kem->length_public_key);
+		fprintBstr(fh, "pk = ", public_key, kem->length_public_key);
 		rc = OQS_KEM_encaps(kem, ciphertext, shared_secret_e, public_key, m);
 		if (rc != OQS_SUCCESS)
 		{
