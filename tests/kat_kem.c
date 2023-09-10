@@ -162,9 +162,9 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 	{
 		if (fm == NULL){
 			fprintf(stderr, "input File name");
-			retrun EXIT_FAILURE;
+			return EXIT_FAILURE;
 		}
-		
+
 		public_key = malloc(kem->length_public_key);
 		memset(public_key, 0, kem->length_public_key);
 
