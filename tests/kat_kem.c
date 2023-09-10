@@ -221,6 +221,7 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 		memset(ciphertext, 0, kem->length_ciphertext);
 
 		freadBstr(fp, ciphertext, kem->length_ciphertext);
+		fprintBstr(fh, "ct = ", ciphertext, ken->length_ciphertext);
 
 		rc = OQS_KEM_decaps(kem, shared_secret_d, ciphertext, secret_key);
 		if (rc != OQS_SUCCESS)
