@@ -118,6 +118,7 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 	FILE *fpk = NULL;
 	FILE *fsk = NULL;
 	FILE *fct = NULL;
+	FILE *fss = NULL;
 
 	OQS_randombytes(seed, 48);
 	OQS_randombytes_nist_kat_init_256bit(seed, NULL);
@@ -178,8 +179,9 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 		memset(m, 0, kem->length_plaintext);
 		freadBstr(fm, m, kem->length_plaintext);
 		//memcpy(m, message, strlen(message));
-		// fprintBstr(fh, "initial message = ", m, kem->length_shared_secret);
+		fprintBstr(fh, "initial message = ", m, kem->length_plaintext);
 		fct = fopen("cipher_text.txt", "wb");
+		fss = fopen("shared_secret.txt", "wb");
 
 		freadBstr(fp, public_key, kem->length_public_key);
 		fprintBstr(fh, "pk=", public_key, kem->length_public_key);
@@ -191,8 +193,14 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 		}
 		fprintBstr(fh, "ct = ", ciphertext, kem->length_ciphertext);
 		fprintBstr(fh, "ss = ", shared_secret_e, kem->length_shared_secret);
-		fclose(fsk);
-		fsk = NULL;
+		fprintBstr(fct, "", ciphertext, kem->length_ciphertext);
+		fprintBstr(fss, "", shared_secret_e, kem->length_shared_secret);
+		fclose(fct);
+		fclose(fss);
+		fct = NULL;
+		fss = NULL;
+		//fclose(fsk);
+		//fsk = NULL;
 	}
 	if (device == 2 && fp != NULL)
 	{
