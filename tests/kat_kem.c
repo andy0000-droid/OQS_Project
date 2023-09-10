@@ -176,7 +176,6 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 		memset(shared_secret_e, 0, kem->length_shared_secret);
 
 		m = malloc(kem->length_plaintext);
-		memset(m, 0, kem->length_plaintext);
 		freadBstr(fm, m, kem->length_plaintext);
 		//memcpy(m, message, strlen(message));
 		fprintBstr(fh, "initial message = ", m, kem->length_plaintext);
