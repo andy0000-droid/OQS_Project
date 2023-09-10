@@ -50,7 +50,9 @@ static void fprintBstr(FILE *fp, const char *S, const uint8_t *A, size_t L)
 	{
 		fprintf(fp, "00");
 	}
-	fprintf(fp, "\n");
+	if (fp == stdout) {
+		fprintf(fp, "\n");
+	}
 }
 
 static void freadBstr(FILE *fp, uint8_t *A, size_t L)
