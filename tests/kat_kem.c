@@ -198,6 +198,8 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 		fclose(fss);
 		fct = NULL;
 		fss = NULL;
+		free(m);
+		m = NULL;
 		//fclose(fsk);
 		//fsk = NULL;
 	}
@@ -212,6 +214,9 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 
 		ciphertext = malloc(kem->length_ciphertext);
 		memset(ciphertext, 0, kem->length_ciphertext);
+
+		fct = fopen("cipher_text.txt", "rb");
+		freadBstr(fct, ciphertext, kem->length_ciphertext);
 
 		rc = OQS_KEM_decaps(kem, shared_secret_d, ciphertext, secret_key);
 		if (rc != OQS_SUCCESS)
@@ -229,6 +234,8 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 			OQS_print_hex_string("shared_secret_d", shared_secret_d, kem->length_shared_secret);
 			goto err;
 		}*/
+		fclose(fct);
+		fct=NULL;
 	}
 	ret = OQS_SUCCESS;
 	goto cleanup;
