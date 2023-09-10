@@ -210,7 +210,7 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 	}
 	if (device == 2 && fp != NULL)
 	{
-		fprintf(stdout, "Start decapsulation");
+		fprintf(stdout, "Start decapsulation\n");
 		secret_key = malloc(kem->length_secret_key);
 		memset(secret_key, 0, kem->length_secret_key);
 
@@ -220,8 +220,7 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 		ciphertext = malloc(kem->length_ciphertext);
 		memset(ciphertext, 0, kem->length_ciphertext);
 
-		fct = fopen("cipher_text.txt", "rb");
-		freadBstr(fct, ciphertext, kem->length_ciphertext);
+		freadBstr(fp, ciphertext, kem->length_ciphertext);
 
 		rc = OQS_KEM_decaps(kem, shared_secret_d, ciphertext, secret_key);
 		if (rc != OQS_SUCCESS)
@@ -239,8 +238,6 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 			OQS_print_hex_string("shared_secret_d", shared_secret_d, kem->length_shared_secret);
 			goto err;
 		}*/
-		fclose(fct);
-		fct=NULL;
 	}
 	ret = OQS_SUCCESS;
 	goto cleanup;
@@ -329,7 +326,7 @@ int main(int argc, char **argv)
 			device = 2;
 			fprintf(stdout, "set device to client bob\nset device ID to %d\n", device);
 			if (argc > 3) {
-				fp = fopen(argv[4], "rb");
+				fp = fopen(argv[3], "rb");
 			}
 		}
 		else
