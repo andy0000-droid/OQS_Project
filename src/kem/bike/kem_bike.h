@@ -29,6 +29,7 @@ OQS_API OQS_STATUS OQS_KEM_bike_l3_decaps(uint8_t *shared_secret, const unsigned
 #endif
 
 #ifdef OQS_ENABLE_KEM_bike_l5
+#define OQS_KEM_bike_l5_length_plaintext 32
 #define OQS_KEM_bike_l5_length_secret_key 16494
 #define OQS_KEM_bike_l5_length_public_key 5122
 #define OQS_KEM_bike_l5_length_ciphertext 5154
