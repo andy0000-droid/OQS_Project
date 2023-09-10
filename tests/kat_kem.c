@@ -75,7 +75,7 @@ static void freadBstr(FILE *fp, uint8_t *A, size_t L)
 	}*/
 }
 
-static OQS_STATUS kem_kat(const char *method_name, uint8_t *message, const int device, FILE *fp)
+static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, FILE *fp)
 {
 	uint8_t entropy_input[48];
 	uint8_t seed[48];
@@ -160,7 +160,11 @@ static OQS_STATUS kem_kat(const char *method_name, uint8_t *message, const int d
 	}
 	if (device == 1 || device == 0)
 	{
-
+		if (fm == NULL){
+			fprintf(stderr, "input File name");
+			retrun EXIT_FAILURE;
+		}
+		
 		public_key = malloc(kem->length_public_key);
 		memset(public_key, 0, kem->length_public_key);
 
@@ -253,6 +257,7 @@ int main(int argc, char **argv)
 
 	int device = -1;
 	FILE *fp = NULL;
+	FILE *fm = NULL;
 
 	OQS_init();
 
@@ -289,12 +294,14 @@ int main(int argc, char **argv)
 			device = 0;
 			fprintf(stdout, "set device to server\nset device ID to %d\n", device);
 			fp = fopen(argv[4], "rb");
+			fm = fopen(argv[3], "rb");
 		}
 		else if (!(strcmp(argv[2], "client_a")))
 		{
 			device = 1;
 			fprintf(stdout, "set device to client alice\nset device ID to %d\n", device);
 			fp = fopen(argv[4], "rb");
+			fm = fopen(argv[3], "rb");
 		}
 		else if (!(strcmp(argv[2], "client_b")))
 		{
@@ -313,7 +320,7 @@ int main(int argc, char **argv)
 		return EXIT_FAILURE;
 	}
 
-	OQS_STATUS rc = kem_kat(alg_name, argv[3], device, fp);
+	OQS_STATUS rc = kem_kat(alg_name, fm, device, fp);
 	if (rc != OQS_SUCCESS)
 	{
 		OQS_destroy();
@@ -321,6 +328,7 @@ int main(int argc, char **argv)
 	}
 	OQS_destroy();
 	fclose(fp);
+	fclose(fm);
 	free(message);
 	return EXIT_SUCCESS;
 }
