@@ -323,6 +323,9 @@ int main(int argc, char **argv)
 		{
 			device = 2;
 			fprintf(stdout, "set device to client bob\nset device ID to %d\n", device);
+			if (argc > 3) {
+				fp = fopen(argv[4], "rb");
+			}
 		}
 		else
 		{
