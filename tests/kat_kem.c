@@ -220,8 +220,9 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 		ciphertext = malloc(kem->length_ciphertext);
 		memset(ciphertext, 0, kem->length_ciphertext);
 
-		freadBstr(fp, ciphertext, kem->length_ciphertext);
+		freadBstr(fm, ciphertext, kem->length_ciphertext);
 		fprintBstr(fh, "ct = ", ciphertext, kem->length_ciphertext);
+		freadBstr(fp, secret_key, kem->length_secret_key);
 
 		rc = OQS_KEM_decaps(kem, shared_secret_d, ciphertext, secret_key);
 		if (rc != OQS_SUCCESS)
@@ -327,7 +328,8 @@ int main(int argc, char **argv)
 			device = 2;
 			fprintf(stdout, "set device to client bob\nset device ID to %d\n", device);
 			if (argc > 3) {
-				fp = fopen(argv[3], "rb");
+				fp = fopen(argv[4], "rb");
+				fm = fopen(argv[3], "rb");
 			}
 		}
 		else
