@@ -133,11 +133,7 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 	{
 		fprintf(stdout, "keypair need\n");
 	}
-	if (fm==NULL)
-	{
-		fprintf(stderr, "No message file\n");
-		return EXIT_FAILURE;
-	}
+	
 	fprintf(fh, "starting KEM algirhtm\n");
 	if (device == 2 && fp == NULL)
 	{
@@ -167,6 +163,11 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 	}
 	if (device == 1 || device == 0)
 	{
+		if (fm == NULL )
+		{
+			fprintf(stderr, "No message file\n");
+			return EXIT_FAILURE;
+		}
 		if (fm == NULL){
 			fprintf(stderr, "input File name");
 			return EXIT_FAILURE;
