@@ -176,7 +176,8 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 
 		m = malloc(kem->length_plaintext);
 		memset(m, 0, kem->length_plaintext);
-		memcpy(m, message, strlen(message));
+		freadBstr(fm, m, kem->length_plaintext);
+		//memcpy(m, message, strlen(message));
 		// fprintBstr(fh, "initial message = ", m, kem->length_shared_secret);
 		fct = fopen("cipher_text.txt", "wb");
 
