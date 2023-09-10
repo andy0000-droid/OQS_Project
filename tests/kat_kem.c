@@ -238,9 +238,9 @@ cleanup:
 			OQS_MEM_secure_free(shared_secret_d, kem->length_shared_secret);
 	}
 	if (public_key != NULL)
-		OQS_KEM_insecure_free(public_key);
+		OQS_MEM_insecure_free(public_key);
 	if (ciphertext != NULL)
-		OQS_KEM_insecure_free(ciphertext);
+		OQS_MEM_insecure_free(ciphertext);
 	OQS_KEM_free(kem);
 	return ret;
 }
