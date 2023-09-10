@@ -219,6 +219,7 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 			fprintf(stderr, "[kat_kem] %s ERROR: OQS_KEM_decaps failed!\n", method_name);
 			goto err;
 		}
+		fprintBstr(fh, "shared_sercret: ", shared_secret_d, kem->length_shared_secret);
 		/*
 		rv = memcmp(shared_secret_e, shared_secret_d, kem->length_shared_secret);
 		if (rv != 0)
