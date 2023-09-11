@@ -240,9 +240,11 @@ OQS_API int encaps(OUT unsigned char *     ct,
 OQS_API int decaps(OUT unsigned char *     ss,
                    IN const unsigned char *ct,
                    IN const unsigned char *sk, 
-                   uint8_t *message)
+                   OUT unsigned char *message)
 {
-  uint8_t *tmp = NULL;
+  unsigned char *tmp = NULL;
+  message = malloc(32);
+  memset(message, 0, 32);
   tmp = malloc(32);
   memset(tmp, 0, 32);
   // Public values, does not require a cleanup on exit
@@ -276,7 +278,7 @@ OQS_API int decaps(OUT unsigned char *     ss,
   success_cond = secure_cmp(PE0_RAW(&e_prime), PE0_RAW(&e_tmp), R_BYTES);
   success_cond &= secure_cmp(PE1_RAW(&e_prime), PE1_RAW(&e_tmp), R_BYTES);
 
-  bike_memcpy(tmp, m_prime.raw, sizeof(m_prime));
+  bike_memcpy(tmp, m_prime.raw, 32);
 
   // Compute either K(m', C) or K(sigma, C) based on the success condition
   uint32_t mask = secure_l32_mask(0, success_cond);
@@ -290,7 +292,7 @@ OQS_API int decaps(OUT unsigned char *     ss,
 
   // Copy the data into the output buffer
   bike_memcpy(ss, &l_ss, sizeof(l_ss));
-  bike_memcpy(message, tmp, sizeof(m_prime));
+  bike_memcpy(message, tmp, 32);
   
   //bike_memcpy((message+0x10), m_prime.raw, sizeof(m_prime));
   free(tmp);
