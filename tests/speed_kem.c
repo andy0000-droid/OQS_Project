@@ -17,7 +17,7 @@
 #include "ds_benchmark.h"
 #include "system_info.c"
 
-static void fullcycletest(OQS_KEM *kem, uint8_t *public_key, uint8_t *secret_key, uint8_t *ciphertext, uint8_t *shared_secret_e, uint8_t *shared_secret_d) {
+static void fullcycletest(OQS_KEM *kem, uint8_t *public_key, uint8_t *secret_key, uint8_t *ciphertext, uint8_t *shared_secret_e, uint8_t *shared_secret_d, uint8_t *m) {
 	if (OQS_KEM_keypair(kem, public_key, secret_key) != OQS_SUCCESS) {
 		printf("Error creating KEM key. Exiting.\n");
 		exit(-1);
@@ -26,7 +26,7 @@ static void fullcycletest(OQS_KEM *kem, uint8_t *public_key, uint8_t *secret_key
 		printf("Error during KEM encaps. Exiting.\n");
 		exit(-1);
 	}
-	if (OQS_KEM_decaps(kem, shared_secret_d, ciphertext, secret_key) != OQS_SUCCESS) {
+	if (OQS_KEM_decaps(kem, shared_secret_d, ciphertext, secret_key, m) != OQS_SUCCESS) {
 		printf("Error during KEM decaps. Exiting.\n");
 		exit(-1);
 	}
@@ -67,7 +67,7 @@ static OQS_STATUS kem_speed_wrapper(const char *method_name, uint64_t duration, 
 		TIME_OPERATION_SECONDS(OQS_KEM_encaps(kem, ciphertext, shared_secret_e, public_key, "test message"), "encaps", duration)
 		TIME_OPERATION_SECONDS(OQS_KEM_decaps(kem, shared_secret_d, ciphertext, secret_key, m), "decaps", duration)
 	} else {
-		TIME_OPERATION_SECONDS(fullcycletest(kem, public_key, secret_key, ciphertext, shared_secret_e, shared_secret_d), "fullcycletest", duration)
+		TIME_OPERATION_SECONDS(fullcycletest(kem, public_key, secret_key, ciphertext, shared_secret_e, shared_secret_d ,m), "fullcycletest", duration)
 	}
 
 	if (printInfo) {
