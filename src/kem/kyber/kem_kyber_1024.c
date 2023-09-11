@@ -39,7 +39,7 @@ extern int pqcrystals_kyber1024_ref_dec(uint8_t *ss, const uint8_t *ct, const ui
 #if defined(OQS_ENABLE_KEM_kyber_1024_avx2)
 extern int pqcrystals_kyber1024_avx2_keypair(uint8_t *pk, uint8_t *sk);
 extern int pqcrystals_kyber1024_avx2_enc(uint8_t *ct, uint8_t *ss, const uint8_t *pk, const uint8_t *message);
-extern int pqcrystals_kyber1024_avx2_dec(uint8_t *ss, const uint8_t *ct, const uint8_t *sk);
+extern int pqcrystals_kyber1024_avx2_dec(uint8_t *ss, const uint8_t *ct, const uint8_t *sk, uint8_t *message);
 #endif
 
 #if defined(OQS_ENABLE_KEM_kyber_1024_aarch64)
@@ -121,7 +121,7 @@ OQS_API OQS_STATUS OQS_KEM_kyber_1024_decaps(uint8_t *shared_secret, const uint8
 	if (OQS_CPU_has_extension(OQS_CPU_EXT_AVX2) && OQS_CPU_has_extension(OQS_CPU_EXT_BMI2) && OQS_CPU_has_extension(OQS_CPU_EXT_POPCNT))
 	{
 #endif /* OQS_DIST_BUILD */
-		return (OQS_STATUS)pqcrystals_kyber1024_avx2_dec(shared_secret, ciphertext, secret_key);
+		return (OQS_STATUS)pqcrystals_kyber1024_avx2_dec(shared_secret, ciphertext, secret_key, message);
 #if defined(OQS_DIST_BUILD)
 	}
 	else

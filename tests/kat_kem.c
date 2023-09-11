@@ -122,6 +122,7 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 	FILE *fsk = NULL;
 	FILE *fct = NULL;
 	FILE *fss = NULL;
+	FILE *fpt = NULL;
 
 	OQS_randombytes(seed, 48);
 	OQS_randombytes_nist_kat_init_256bit(seed, NULL);
@@ -223,14 +224,17 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 		freadBstr(fm, ciphertext, kem->length_ciphertext);
 		fprintBstr(fh, "ct = ", ciphertext, kem->length_ciphertext);
 		freadBstr(fp, secret_key, kem->length_secret_key);
-
-		rc = OQS_KEM_decaps(kem, shared_secret_d, ciphertext, secret_key);
+		fpt = fopen("decryted.txt", "wb");
+		m = malloc(kem->length_plaintext);
+		memset(m, 0, kem->length_plaintext);
+		rc = OQS_KEM_decaps(kem, shared_secret_d, ciphertext, secret_key, m);
 		if (rc != OQS_SUCCESS)
 		{
 			fprintf(stderr, "[kat_kem] %s ERROR: OQS_KEM_decaps failed!\n", method_name);
 			goto err;
 		}
 		fprintBstr(fh, "shared_sercret: ", shared_secret_d, kem->length_shared_secret);
+		fprintBstr(fpt, "", m, kem->length_plaintext);
 		/*
 		rv = memcmp(shared_secret_e, shared_secret_d, kem->length_shared_secret);
 		if (rv != 0)
@@ -240,6 +244,10 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 			OQS_print_hex_string("shared_secret_d", shared_secret_d, kem->length_shared_secret);
 			goto err;
 		}*/
+		fclose(fpt);
+		fpt = NULL;
+		free(m);
+		m = NULL;
 	}
 	ret = OQS_SUCCESS;
 	goto cleanup;
