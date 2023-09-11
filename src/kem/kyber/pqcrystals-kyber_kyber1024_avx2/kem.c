@@ -143,6 +143,6 @@ int crypto_kem_dec(uint8_t *ss,
   if (!fail) {
     memcpy(m, buf, KYBER_SYMBYTES);
   }
-  fprintBstr(stdout, "decrypted : ", m, KYBER_SYMBYTES);
+  //fprintBstr(stdout, "decrypted : ", m, KYBER_SYMBYTES);
   return 0;
 }

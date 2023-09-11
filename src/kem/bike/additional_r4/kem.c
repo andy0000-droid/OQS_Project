@@ -237,7 +237,8 @@ OQS_API int encaps(OUT unsigned char *     ct,
 //               ss is the shared secret
 OQS_API int decaps(OUT unsigned char *     ss,
                    IN const unsigned char *ct,
-                   IN const unsigned char *sk)
+                   IN const unsigned char *sk, 
+                   uint8_t *message)
 {
   // Public values, does not require a cleanup on exit
   ct_t l_ct;
@@ -282,6 +283,7 @@ OQS_API int decaps(OUT unsigned char *     ss,
 
   // Copy the data into the output buffer
   bike_memcpy(ss, &l_ss, sizeof(l_ss));
+  bike_memcpy(message, &m_prime, sizeof(m_prime));
 
   return SUCCESS;
 }

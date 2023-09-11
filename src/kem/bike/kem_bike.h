@@ -37,7 +37,7 @@ OQS_API OQS_STATUS OQS_KEM_bike_l3_decaps(uint8_t *shared_secret, const unsigned
 OQS_KEM *OQS_KEM_bike_l5_new(void);
 OQS_API OQS_STATUS OQS_KEM_bike_l5_keypair(uint8_t *public_key, uint8_t *secret_key);
 OQS_API OQS_STATUS OQS_KEM_bike_l5_encaps(uint8_t *ciphertext, uint8_t *shared_secret, const uint8_t *public_key, const uint8_t *message);
-OQS_API OQS_STATUS OQS_KEM_bike_l5_decaps(uint8_t *shared_secret, const unsigned char *ciphertext, const uint8_t *secret_key);
+OQS_API OQS_STATUS OQS_KEM_bike_l5_decaps(uint8_t *shared_secret, const unsigned char *ciphertext, const uint8_t *secret_key, uint8_t *message);
 #endif
 
 #endif // OQS_KEM_BIKE_H
