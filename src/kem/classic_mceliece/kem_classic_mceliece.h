@@ -50,6 +50,7 @@
 // #endif
 
 #ifdef OQS_ENABLE_KEM_classic_mceliece_6688128
+// #define OQS_KEM_classic_mceliece_6688128_length_plaintext 32
 #define OQS_KEM_classic_mceliece_6688128_length_public_key 1044992
 #define OQS_KEM_classic_mceliece_6688128_length_secret_key 13932
 #define OQS_KEM_classic_mceliece_6688128_length_ciphertext 208
@@ -61,6 +62,7 @@ OQS_API OQS_STATUS OQS_KEM_classic_mceliece_6688128_decaps(uint8_t *shared_secre
 #endif
 
 #ifdef OQS_ENABLE_KEM_classic_mceliece_6688128f
+// #define OQS_KEM_classic_mceliece_6688128f_length_plaintext 32
 #define OQS_KEM_classic_mceliece_6688128f_length_public_key 1044992
 #define OQS_KEM_classic_mceliece_6688128f_length_secret_key 13932
 #define OQS_KEM_classic_mceliece_6688128f_length_ciphertext 208
@@ -72,6 +74,7 @@ OQS_API OQS_STATUS OQS_KEM_classic_mceliece_6688128f_decaps(uint8_t *shared_secr
 #endif
 
 #ifdef OQS_ENABLE_KEM_classic_mceliece_6960119
+// #define OQS_KEM_classic_mceliece_6960119_length_plaintext 32
 #define OQS_KEM_classic_mceliece_6960119_length_public_key 1047319
 #define OQS_KEM_classic_mceliece_6960119_length_secret_key 13948
 #define OQS_KEM_classic_mceliece_6960119_length_ciphertext 194
@@ -83,6 +86,7 @@ OQS_API OQS_STATUS OQS_KEM_classic_mceliece_6960119_decaps(uint8_t *shared_secre
 #endif
 
 #ifdef OQS_ENABLE_KEM_classic_mceliece_6960119f
+// #define OQS_KEM_classic_mceliece_6960119f_length_plaintext 32
 #define OQS_KEM_classic_mceliece_6960119f_length_public_key 1047319
 #define OQS_KEM_classic_mceliece_6960119f_length_secret_key 13948
 #define OQS_KEM_classic_mceliece_6960119f_length_ciphertext 194
@@ -94,6 +98,7 @@ OQS_API OQS_STATUS OQS_KEM_classic_mceliece_6960119f_decaps(uint8_t *shared_secr
 #endif
 
 #ifdef OQS_ENABLE_KEM_classic_mceliece_8192128
+// #define OQS_KEM_classic_mceliece_8192128_length_plaintext 32
 #define OQS_KEM_classic_mceliece_8192128_length_public_key 1357824
 #define OQS_KEM_classic_mceliece_8192128_length_secret_key 14120
 #define OQS_KEM_classic_mceliece_8192128_length_ciphertext 208
@@ -105,6 +110,7 @@ OQS_API OQS_STATUS OQS_KEM_classic_mceliece_8192128_decaps(uint8_t *shared_secre
 #endif
 
 #ifdef OQS_ENABLE_KEM_classic_mceliece_8192128f
+// #define OQS_KEM_classic_mceliece_8192128f_length_plaintext 32
 #define OQS_KEM_classic_mceliece_8192128f_length_public_key 1357824
 #define OQS_KEM_classic_mceliece_8192128f_length_secret_key 14120
 #define OQS_KEM_classic_mceliece_8192128f_length_ciphertext 208

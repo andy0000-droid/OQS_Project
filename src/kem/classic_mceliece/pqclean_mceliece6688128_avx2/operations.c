@@ -19,6 +19,7 @@ int crypto_kem_enc(
     unsigned char *c,
     unsigned char *key,
     const unsigned char *pk
+    unsigned char *message
 ) {
     unsigned char e[ SYS_N / 8 ];
     unsigned char one_ec[ 1 + SYS_N / 8 + SYND_BYTES ] = {1};
