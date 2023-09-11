@@ -225,6 +225,7 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 		fprintBstr(fh, "ct = ", ciphertext, kem->length_ciphertext);
 		freadBstr(fp, secret_key, kem->length_secret_key);
 		fpt = fopen("decryted.txt", "wb");
+		fss = fopen("shared_decaps.txt", "wb");
 		m = malloc(kem->length_plaintext);
 		memset(m, 0, kem->length_plaintext);
 		rc = OQS_KEM_decaps(kem, shared_secret_d, ciphertext, secret_key, m);
@@ -235,6 +236,7 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 		}
 		fprintBstr(fh, "shared_sercret: ", shared_secret_d, kem->length_shared_secret);
 		fprintBstr(fpt, "", m, kem->length_plaintext);
+		fprintBstr(fss, "", shared_secret_d, kem->length_shared_secret);
 		/*
 		rv = memcmp(shared_secret_e, shared_secret_d, kem->length_shared_secret);
 		if (rv != 0)
@@ -246,6 +248,8 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 		}*/
 		fclose(fpt);
 		fpt = NULL;
+		fclose(fss);
+		fss = NULL;
 		free(m);
 		m = NULL;
 	}
