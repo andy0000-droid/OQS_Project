@@ -134,13 +134,14 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 	// }
 	if (fp == NULL)
 	{
-		fprintf(stdout, "keypair need\n");
+		fprintf(fh, "keypair need\n");
 	}
 	
 	fprintf(fh, "starting KEM algirhtm\n");
 	if (device == 2 && fp == NULL)
 	{
-		fprintf(fh, "count = 0\n");
+		// fprintf(fh, "count = 0\n");
+		fprintf(fh, "start keypair\n");
 		fprintBstr(fh, "seed = ", seed, 48); // error occur
 		public_key = malloc(kem->length_public_key);
 		secret_key = malloc(kem->length_secret_key);
@@ -148,7 +149,6 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 		memset(secret_key, 0, kem->length_secret_key);
 		fpk = fopen("public_key.txt", "wb");
 		fsk = fopen("secret_key.txt", "wb");
-		fprintf(fh, "start keypair\n");
 		rc = OQS_KEM_keypair(kem, public_key, secret_key);
 		if (rc != OQS_SUCCESS)
 		{
@@ -157,7 +157,7 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 		}
 		fprintBstr(fpk, "", public_key, kem->length_public_key);
 		fprintBstr(fsk, "", secret_key, kem->length_secret_key);
-		fprintBstr(fh, "pk = ", public_key, kem->length_public_key);
+		//fprintBstr(fh, "pk = ", public_key, kem->length_public_key);
 		// fprintBstr(fh, "sk=", secret_key, kem->length_secret_key);
 		fclose(fpk);
 		fclose(fsk);
@@ -184,20 +184,20 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 		m = malloc(kem->length_plaintext);
 		freadBstr(fm, m, kem->length_plaintext);
 		//memcpy(m, message, strlen(message));
-		fprintBstr(fh, "initial message = ", m, kem->length_plaintext);
+		//fprintBstr(fh, "initial message = ", m, kem->length_plaintext);
 		fct = fopen("cipher_text.txt", "wb");
 		fss = fopen("shared_secret.txt", "wb");
 
 		freadBstr(fp, public_key, kem->length_public_key);
-		fprintBstr(fh, "pk = ", public_key, kem->length_public_key);
+		//fprintBstr(fh, "pk = ", public_key, kem->length_public_key);
 		rc = OQS_KEM_encaps(kem, ciphertext, shared_secret_e, public_key, m);
 		if (rc != OQS_SUCCESS)
 		{
 			fprintf(stderr, "[kat_kem] %s ERROR: OQS_KEM_encaps failed!\n", method_name);
 			goto err;
 		}
-		fprintBstr(fh, "ct = ", ciphertext, kem->length_ciphertext);
-		fprintBstr(fh, "ss = ", shared_secret_e, kem->length_shared_secret);
+		//fprintBstr(fh, "ct = ", ciphertext, kem->length_ciphertext);
+		//fprintBstr(fh, "ss = ", shared_secret_e, kem->length_shared_secret);
 		fprintBstr(fct, "", ciphertext, kem->length_ciphertext);
 		fprintBstr(fss, "", shared_secret_e, kem->length_shared_secret);
 		fclose(fct);
@@ -222,7 +222,7 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 		memset(ciphertext, 0, kem->length_ciphertext);
 
 		freadBstr(fm, ciphertext, kem->length_ciphertext);
-		fprintBstr(fh, "ct = ", ciphertext, kem->length_ciphertext);
+		//fprintBstr(fh, "ct = ", ciphertext, kem->length_ciphertext);
 		freadBstr(fp, secret_key, kem->length_secret_key);
 		fpt = fopen("decryted.txt", "wb");
 		fss = fopen("shared_decaps.txt", "wb");
@@ -234,7 +234,7 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 			fprintf(stderr, "[kat_kem] %s ERROR: OQS_KEM_decaps failed!\n", method_name);
 			goto err;
 		}
-		fprintBstr(fh, "shared_sercret: ", shared_secret_d, kem->length_shared_secret);
+		//fprintBstr(fh, "shared_sercret: ", shared_secret_d, kem->length_shared_secret);
 		fprintBstr(fpt, "", m, kem->length_plaintext);
 		fprintBstr(fss, "", shared_secret_d, kem->length_shared_secret);
 		/*
