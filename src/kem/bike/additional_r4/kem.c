@@ -208,14 +208,15 @@ OQS_API int encaps(OUT unsigned char *     ct,
   // Copy the data from the input buffer. This is required in order to avoid
   // alignment issues on non x86_64 processors.
   bike_memcpy(&l_pk, pk, sizeof(l_pk));
-  fprintf(stdout, "Crystal Kyber start\n");
-  fprintBstr(stdout, "message = ", message, 32);
+  //fprintf(stdout, "Crystal Kyber start\n");
+  //fprintBstr(stdout, "message = ", message, 32);
   get_seeds(&seeds);
 
   // e = H(m) = H(seed[0])
   //convert_seed_to_m_type(&m, &seeds.seed[0]);
   convert_seed_to_m_type(&m, &message);
   GUARD(function_h(&e, &m, &l_pk));
+  fprintBstr(stdout, "hash:", e, size(e));
 
   // Calculate the ciphertext
   GUARD(encrypt(&l_ct, &e, &l_pk, &m));
