@@ -36,7 +36,7 @@ OQS_API OQS_STATUS OQS_KEM_kyber_768_decaps(uint8_t *shared_secret, const uint8_
 OQS_KEM *OQS_KEM_kyber_1024_new(void);
 OQS_API OQS_STATUS OQS_KEM_kyber_1024_keypair(uint8_t *public_key, uint8_t *secret_key);
 OQS_API OQS_STATUS OQS_KEM_kyber_1024_encaps(uint8_t *ciphertext, uint8_t *shared_secret, const uint8_t *public_key, const uint8_t *message);
-OQS_API OQS_STATUS OQS_KEM_kyber_1024_decaps(uint8_t *shared_secret, const uint8_t *ciphertext, const uint8_t *secret_key);
+OQS_API OQS_STATUS OQS_KEM_kyber_1024_decaps(uint8_t *shared_secret, const uint8_t *ciphertext, const uint8_t *secret_key, uint8_t *message);
 #endif
 
 #endif
