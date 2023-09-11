@@ -287,7 +287,7 @@ OQS_API int decaps(OUT unsigned char *     ss,
 
   // Copy the data into the output buffer
   bike_memcpy(ss, &l_ss, sizeof(l_ss));
-  bike_memcpy(message, &m_prime.raw, sizeof(m_prime));
+  bike_memcpy(message, &m_prime, sizeof(m_prime));
   //bike_memcpy((message+0x10), m_prime.raw, sizeof(m_prime));
 
   return SUCCESS;
