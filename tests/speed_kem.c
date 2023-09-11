@@ -41,6 +41,7 @@ static OQS_STATUS kem_speed_wrapper(const char *method_name, uint64_t duration, 
 	uint8_t *ciphertext = NULL;
 	uint8_t *shared_secret_e = NULL;
 	uint8_t *shared_secret_d = NULL;
+	uint8_t *m = NULL;
 	OQS_STATUS ret = OQS_ERROR;
 
 	kem = OQS_KEM_new(method_name);
@@ -53,6 +54,7 @@ static OQS_STATUS kem_speed_wrapper(const char *method_name, uint64_t duration, 
 	ciphertext = malloc(kem->length_ciphertext);
 	shared_secret_e = malloc(kem->length_shared_secret);
 	shared_secret_d = malloc(kem->length_shared_secret);
+	m = malloc(kem->length_plaintext);
 
 	if ((public_key == NULL) || (secret_key == NULL) || (ciphertext == NULL) || (shared_secret_e == NULL) || (shared_secret_d == NULL)) {
 		fprintf(stderr, "ERROR: malloc failed\n");
@@ -63,7 +65,7 @@ static OQS_STATUS kem_speed_wrapper(const char *method_name, uint64_t duration, 
 	if (!doFullCycle) {
 		TIME_OPERATION_SECONDS(OQS_KEM_keypair(kem, public_key, secret_key), "keygen", duration)
 		TIME_OPERATION_SECONDS(OQS_KEM_encaps(kem, ciphertext, shared_secret_e, public_key, "test message"), "encaps", duration)
-		TIME_OPERATION_SECONDS(OQS_KEM_decaps(kem, shared_secret_d, ciphertext, secret_key), "decaps", duration)
+		TIME_OPERATION_SECONDS(OQS_KEM_decaps(kem, shared_secret_d, ciphertext, secret_key, m), "decaps", duration)
 	} else {
 		TIME_OPERATION_SECONDS(fullcycletest(kem, public_key, secret_key, ciphertext, shared_secret_e, shared_secret_d), "fullcycletest", duration)
 	}
@@ -87,7 +89,7 @@ cleanup:
 	OQS_MEM_insecure_free(public_key);
 	OQS_MEM_insecure_free(ciphertext);
 	OQS_KEM_free(kem);
-
+	free(m);
 	return ret;
 }
 
