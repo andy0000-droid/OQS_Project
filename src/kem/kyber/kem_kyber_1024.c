@@ -114,7 +114,7 @@ OQS_API OQS_STATUS OQS_KEM_kyber_1024_encaps(uint8_t *ciphertext, uint8_t *share
 #endif
 }
 
-OQS_API OQS_STATUS OQS_KEM_kyber_1024_decaps(uint8_t *shared_secret, const uint8_t *ciphertext, const uint8_t *secret_key)
+OQS_API OQS_STATUS OQS_KEM_kyber_1024_decaps(uint8_t *shared_secret, const uint8_t *ciphertext, const uint8_t *secret_key, uint8_t *message)
 {
 #if defined(OQS_ENABLE_KEM_kyber_1024_avx2)
 #if defined(OQS_DIST_BUILD)
