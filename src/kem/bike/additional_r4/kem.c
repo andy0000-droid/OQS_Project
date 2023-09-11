@@ -242,6 +242,8 @@ OQS_API int decaps(OUT unsigned char *     ss,
                    IN const unsigned char *sk, 
                    uint8_t *message)
 {
+  message = malloc(32);
+  memset(message, 0, 32);
   // Public values, does not require a cleanup on exit
   ct_t l_ct;
 
@@ -285,7 +287,8 @@ OQS_API int decaps(OUT unsigned char *     ss,
 
   // Copy the data into the output buffer
   bike_memcpy(ss, &l_ss, sizeof(l_ss));
-  bike_memcpy(message, &m_prime.raw, sizeof(m_prime));
+  //bike_memcpy(&l_sk, sk, sizeof(l_sk));
+  bike_memcpy(message, m_prime.raw, sizeof(m_prime));
 
   return SUCCESS;
 }
