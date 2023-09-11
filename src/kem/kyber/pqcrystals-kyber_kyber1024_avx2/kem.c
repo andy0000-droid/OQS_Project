@@ -110,7 +110,8 @@ int crypto_kem_enc(uint8_t *ct,
 **************************************************/
 int crypto_kem_dec(uint8_t *ss,
                    const uint8_t *ct,
-                   const uint8_t *sk)
+                   const uint8_t *sk
+                   uint8_t *m)
 {
   int fail;
   uint8_t buf[2*KYBER_SYMBYTES];
@@ -138,5 +139,6 @@ int crypto_kem_dec(uint8_t *ss,
 
   /* hash concatenation of pre-k and H(c) to k */
   kdf(ss, kr, 2*KYBER_SYMBYTES);
+  memcpy(m, buf, KYBER_SYMBYTES);
   return 0;
 }
