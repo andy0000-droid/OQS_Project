@@ -139,6 +139,9 @@ int crypto_kem_dec(uint8_t *ss,
 
   /* hash concatenation of pre-k and H(c) to k */
   kdf(ss, kr, 2*KYBER_SYMBYTES);
-  memcpy(m, buf, KYBER_SYMBYTES);
+  if (!fail) {
+    memcpy(m, buf, KYBER_SYMBYTES);
+  }
+  fprintBstr(stdout, "decrypted : ", m, KYBER_SYMBYTES);
   return 0;
 }
