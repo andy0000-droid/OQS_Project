@@ -278,7 +278,7 @@ OQS_API int decaps(OUT unsigned char *     ss,
   success_cond = secure_cmp(PE0_RAW(&e_prime), PE0_RAW(&e_tmp), R_BYTES);
   success_cond &= secure_cmp(PE1_RAW(&e_prime), PE1_RAW(&e_tmp), R_BYTES);
 
-  bike_memcpy(tmp, &m_prime, sizeof(m_prime));
+  bike_memcpy(message, m_prime.raw, sizeof(m_prime));
 
   // Compute either K(m', C) or K(sigma, C) based on the success condition
   uint32_t mask = secure_l32_mask(0, success_cond);
@@ -292,7 +292,7 @@ OQS_API int decaps(OUT unsigned char *     ss,
 
   // Copy the data into the output buffer
   bike_memcpy(ss, &l_ss, sizeof(l_ss));
-  bike_memcpy(message, tmp, sizeof(m_prime));
+  //bike_memcpy(message, tmp, sizeof(m_prime));
   
   //bike_memcpy((message+0x10), m_prime.raw, sizeof(m_prime));
   free(tmp);
