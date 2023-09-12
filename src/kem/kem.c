@@ -36,10 +36,10 @@ OQS_API const char *OQS_KEM_alg_identifier(size_t i) {
 		OQS_KEM_alg_kyber_1024,
 		///// OQS_COPY_FROM_UPSTREAM_FRAGMENT_ALG_IDENTIFIER_END
 		OQS_KEM_alg_ntruprime_sntrup761,
-		OQS_KEM_alg_frodokem_640_aes,
-		OQS_KEM_alg_frodokem_640_shake,
-		OQS_KEM_alg_frodokem_976_aes,
-		OQS_KEM_alg_frodokem_976_shake,
+		//OQS_KEM_alg_frodokem_640_aes,
+		//OQS_KEM_alg_frodokem_640_shake,
+		//OQS_KEM_alg_frodokem_976_aes,
+		//OQS_KEM_alg_frodokem_976_shake,
 		OQS_KEM_alg_frodokem_1344_aes,
 		OQS_KEM_alg_frodokem_1344_shake,
 	};
