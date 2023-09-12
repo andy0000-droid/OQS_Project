@@ -14,7 +14,33 @@
  * @brief Implementation of api.h
  */
 
+static void fprintBstr(FILE *fp, const char *S, const uint8_t *A, size_t L)
+{
+	size_t i;
+	fprintf(fp, "%s", S);
+	if (fp == stdout)
+	{
+		for (i = 0; i < L; i++)
+		{
+			fprintf(fp, "%02X", A[i]);
+		}
+	}
+	else
+	{
+		for (i = 0; i < L; i++)
+		{
+			fprintf(fp, "%c", A[i]);
+		}
+	}
 
+	if (L == 0)
+	{
+		fprintf(fp, "00");
+	}
+	if (fp == stdout) {
+		fprintf(fp, "\n");
+	}
+}
 
 /**
  * @brief Keygen of the HQC_KEM IND_CAA2 scheme
@@ -114,7 +140,7 @@ int PQCLEAN_HQCRMRS256_AVX2_crypto_kem_dec(unsigned char *ss, const unsigned cha
 
     // Decryting
     PQCLEAN_HQCRMRS256_AVX2_hqc_pke_decrypt(m, u, v, sk);
-    fprintf(stdout, m);
+    fprintBstr(stdout,"decrypt: ", m, VEC_K_SIZE_BYTES);
     memcpy(message, m, 32);
 
     // Computing theta
