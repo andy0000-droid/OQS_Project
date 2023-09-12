@@ -37,7 +37,7 @@ extern int PQCLEAN_MCELIECE6688128F_CLEAN_crypto_kem_dec(uint8_t *ss, const uint
 #if defined(OQS_ENABLE_KEM_classic_mceliece_6688128f_avx2)
 extern int PQCLEAN_MCELIECE6688128F_AVX2_crypto_kem_keypair(uint8_t *pk, uint8_t *sk);
 extern int PQCLEAN_MCELIECE6688128F_AVX2_crypto_kem_enc(uint8_t *ct, uint8_t *ss, const uint8_t *pk, const uint8_t *message);
-extern int PQCLEAN_MCELIECE6688128F_AVX2_crypto_kem_dec(uint8_t *ss, const uint8_t *ct, const uint8_t *sk), uint8_t *message;
+extern int PQCLEAN_MCELIECE6688128F_AVX2_crypto_kem_dec(uint8_t *ss, const uint8_t *ct, const uint8_t *sk, uint8_t *message);
 #endif
 
 OQS_API OQS_STATUS OQS_KEM_classic_mceliece_6688128f_keypair(uint8_t *public_key, uint8_t *secret_key) {
