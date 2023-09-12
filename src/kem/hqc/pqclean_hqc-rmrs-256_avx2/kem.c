@@ -44,7 +44,7 @@ int PQCLEAN_HQCRMRS256_AVX2_crypto_kem_keypair(unsigned char *pk, unsigned char 
  * @param[in] pk String containing the public key
  * @returns 0 if encapsulation is successful
  */
-int PQCLEAN_HQCRMRS256_AVX2_crypto_kem_enc(unsigned char *ct, unsigned char *ss, const unsigned char *pk) {
+int PQCLEAN_HQCRMRS256_AVX2_crypto_kem_enc(unsigned char *ct, unsigned char *ss, const unsigned char *pk, const unsigned char *message) {
 
     uint8_t theta[SHA512_BYTES] = {0};
     uint8_t m[VEC_K_SIZE_BYTES] = {0};
@@ -54,7 +54,9 @@ int PQCLEAN_HQCRMRS256_AVX2_crypto_kem_enc(unsigned char *ct, unsigned char *ss,
     unsigned char mc[VEC_K_SIZE_BYTES + VEC_N_SIZE_BYTES + VEC_N1N2_SIZE_BYTES] = {0};
 
     // Computing m
-    randombytes(m, VEC_K_SIZE_BYTES);
+    // randombytes(m, VEC_K_SIZE_BYTES);
+    memset(m, 0, VEC_K_SIZE_BYTES);
+    memcpy(m, message, VEC_K_SIZE_BYTES);
 
     // Computing theta
     sha3_512(theta, m, VEC_K_SIZE_BYTES);
@@ -88,7 +90,7 @@ int PQCLEAN_HQCRMRS256_AVX2_crypto_kem_enc(unsigned char *ct, unsigned char *ss,
  * @param[in] sk String containing the secret key
  * @returns 0 if decapsulation is successful, -1 otherwise
  */
-int PQCLEAN_HQCRMRS256_AVX2_crypto_kem_dec(unsigned char *ss, const unsigned char *ct, const unsigned char *sk) {
+int PQCLEAN_HQCRMRS256_AVX2_crypto_kem_dec(unsigned char *ss, const unsigned char *ct, const unsigned char *sk, unsigned char *message) {
 
     uint8_t result;
     uint64_t u[VEC_N_256_SIZE_64] = {0};
@@ -110,7 +112,7 @@ int PQCLEAN_HQCRMRS256_AVX2_crypto_kem_dec(unsigned char *ss, const unsigned cha
 
     // Decryting
     PQCLEAN_HQCRMRS256_AVX2_hqc_pke_decrypt(m, u, v, sk);
-
+    memcpy(message, m, 32);
     // Computing theta
     sha3_512(theta, m, VEC_K_SIZE_BYTES);
 
