@@ -235,7 +235,7 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 			goto err;
 		}
 		//fprintBstr(fh, "shared_sercret: ", shared_secret_d, kem->length_shared_secret);
-		fprintBstr(fpt, "ct:", m, kem->length_plaintext);
+		fprintBstr(fpt, "", m, kem->length_plaintext);
 		fprintBstr(fss, "", shared_secret_d, kem->length_shared_secret);
 		/*
 		rv = memcmp(shared_secret_e, shared_secret_d, kem->length_shared_secret);
