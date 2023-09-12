@@ -73,14 +73,14 @@ extern "C" {
 ///// OQS_COPY_FROM_UPSTREAM_FRAGMENT_ALG_IDENTIFIER_END
 /** Algorithm identifier for sntrup761 KEM. */
 #define OQS_KEM_alg_ntruprime_sntrup761 "sntrup761"
-// /** Algorithm identifier for FrodoKEM-640-AES KEM. */
-// #define OQS_KEM_alg_frodokem_640_aes "FrodoKEM-640-AES"
-// /** Algorithm identifier for FrodoKEM-640-SHAKE KEM. */
-// #define OQS_KEM_alg_frodokem_640_shake "FrodoKEM-640-SHAKE"
-// /** Algorithm identifier for FrodoKEM-976-AES KEM. */
-// #define OQS_KEM_alg_frodokem_976_aes "FrodoKEM-976-AES"
-// /** Algorithm identifier for FrodoKEM-976-SHAKE KEM. */
-// #define OQS_KEM_alg_frodokem_976_shake "FrodoKEM-976-SHAKE"
+ /** Algorithm identifier for FrodoKEM-640-AES KEM. */
+ #define OQS_KEM_alg_frodokem_640_aes "FrodoKEM-640-AES"
+ /** Algorithm identifier for FrodoKEM-640-SHAKE KEM. */
+ #define OQS_KEM_alg_frodokem_640_shake "FrodoKEM-640-SHAKE"
+ /** Algorithm identifier for FrodoKEM-976-AES KEM. */
+ #define OQS_KEM_alg_frodokem_976_aes "FrodoKEM-976-AES"
+ /** Algorithm identifier for FrodoKEM-976-SHAKE KEM. */
+ #define OQS_KEM_alg_frodokem_976_shake "FrodoKEM-976-SHAKE"
 /** Algorithm identifier for FrodoKEM-1344-AES KEM. */
 #define OQS_KEM_alg_frodokem_1344_aes "FrodoKEM-1344-AES"
 /** Algorithm identifier for FrodoKEM-1344-SHAKE KEM. */

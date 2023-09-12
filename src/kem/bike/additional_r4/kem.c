@@ -216,8 +216,8 @@ OQS_API int encaps(OUT unsigned char *     ct,
   //convert_seed_to_m_type(&m, &seeds.seed[0]);
   convert_seed_to_m_type(&m, &message);
   GUARD(function_h(&e, &m, &l_pk));
-  fprintf(stdout, e.val[0].val.raw);
-  fprintf(stdout, e.val[1].val.raw);
+  // fprintf(stdout, e.val[0].val.raw);
+  // fprintf(stdout, e.val[1].val.raw);
 
   // Calculate the ciphertext
   GUARD(encrypt(&l_ct, &e, &l_pk, &m));
