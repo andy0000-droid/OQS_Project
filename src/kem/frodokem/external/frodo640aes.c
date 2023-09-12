@@ -1,4 +1,3 @@
-/*
 #include <stddef.h>
 #include <stdint.h>
 
@@ -13,4 +12,3 @@
 
 #include "frodo_macrify_optimized.c"
 #include "frodo_macrify_aes_portable.c"
-*/

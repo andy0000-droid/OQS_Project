@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 #include <oqs/kem_frodokem.h>
-/*
+
 #ifdef OQS_ENABLE_KEM_frodokem_976_shake
 
 OQS_KEM *OQS_KEM_frodokem_976_shake_new(void) {
@@ -31,4 +31,3 @@ OQS_KEM *OQS_KEM_frodokem_976_shake_new(void) {
 }
 
 #endif
-*/

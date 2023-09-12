@@ -63,7 +63,7 @@ OQS_STATUS crypto_kem_keypair(unsigned char* pk, unsigned char* sk)
 }
 
 
-OQS_STATUS crypto_kem_enc(unsigned char *ct, unsigned char *ss, const unsigned char *pk, unsigned char *message)
+OQS_STATUS crypto_kem_enc(unsigned char *ct, unsigned char *ss, const unsigned char *pk)
 { // FrodoKEM's key encapsulation
     const uint8_t *pk_seedA = &pk[0];
     const uint8_t *pk_b = &pk[BYTES_SEED_A];
@@ -132,7 +132,7 @@ OQS_STATUS crypto_kem_enc(unsigned char *ct, unsigned char *ss, const unsigned c
 }
 
 
-OQS_STATUS crypto_kem_dec(unsigned char *ss, const unsigned char *ct, const unsigned char *sk, unsigned char *message)
+OQS_STATUS crypto_kem_dec(unsigned char *ss, const unsigned char *ct, const unsigned char *sk)
 { // FrodoKEM's key decapsulation
     uint16_t B[PARAMS_N*PARAMS_NBAR] = {0};
     uint16_t Bp[PARAMS_N*PARAMS_NBAR] = {0};

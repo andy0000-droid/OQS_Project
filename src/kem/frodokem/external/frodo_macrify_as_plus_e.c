@@ -77,3 +77,4 @@ int frodo_mul_add_as_plus_e_actual(uint16_t *out, const uint16_t *s, const uint1
 #endif
     return 1;
 }
+
