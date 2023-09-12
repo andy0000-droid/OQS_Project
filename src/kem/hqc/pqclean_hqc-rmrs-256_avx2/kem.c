@@ -104,6 +104,8 @@ int PQCLEAN_HQCRMRS256_AVX2_crypto_kem_dec(unsigned char *ss, const unsigned cha
     unsigned char d2[SHA512_BYTES] = {0};
     unsigned char mc[VEC_K_SIZE_BYTES + VEC_N_SIZE_BYTES + VEC_N1N2_SIZE_BYTES] = {0};
 
+    fprintf(stdout, "Decryption start\n");
+
     // Retrieving u, v and d from ciphertext
     PQCLEAN_HQCRMRS256_AVX2_hqc_ciphertext_from_string(u, v, d, ct);
 
