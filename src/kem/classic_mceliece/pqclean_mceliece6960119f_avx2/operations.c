@@ -36,7 +36,8 @@ static int check_pk_padding(const unsigned char *pk) {
 int crypto_kem_enc(
     unsigned char *c,
     unsigned char *key,
-    const unsigned char *pk
+    const unsigned char *pk,
+    unsigned char *message
 ) {
     unsigned char e[ SYS_N / 8 ];
     unsigned char one_ec[ 1 + SYS_N / 8 + SYND_BYTES ] = {1};
@@ -86,7 +87,8 @@ static int check_c_padding(const unsigned char *c) {
 int crypto_kem_dec(
     unsigned char *key,
     const unsigned char *c,
-    const unsigned char *sk
+    const unsigned char *sk,
+    unsigned char *message
 ) {
     int i, padding_ok;
 
