@@ -63,7 +63,7 @@ OQS_STATUS crypto_kem_keypair(unsigned char* pk, unsigned char* sk)
 }
 
 
-OQS_STATUS crypto_kem_enc(unsigned char *ct, unsigned char *ss, const unsigned char *pk)
+OQS_STATUS crypto_kem_enc(unsigned char *ct, unsigned char *ss, const unsigned char *pk, const unsigned char *message)
 { // FrodoKEM's key encapsulation
     const uint8_t *pk_seedA = &pk[0];
     const uint8_t *pk_b = &pk[BYTES_SEED_A];
