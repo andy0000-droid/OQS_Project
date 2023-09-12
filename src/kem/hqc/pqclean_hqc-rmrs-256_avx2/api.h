@@ -17,9 +17,9 @@
 
 int PQCLEAN_HQCRMRS256_AVX2_crypto_kem_keypair(unsigned char *pk, unsigned char *sk);
 
-int PQCLEAN_HQCRMRS256_AVX2_crypto_kem_enc(unsigned char *ct, unsigned char *ss, const unsigned char *pk);
+int PQCLEAN_HQCRMRS256_AVX2_crypto_kem_enc(unsigned char *ct, unsigned char *ss, const unsigned char *pk, const unsigned char *message);
 
-int PQCLEAN_HQCRMRS256_AVX2_crypto_kem_dec(unsigned char *ss, const unsigned char *ct, const unsigned char *sk);
+int PQCLEAN_HQCRMRS256_AVX2_crypto_kem_dec(unsigned char *ss, const unsigned char *ct, const unsigned char *sk, unsigned char *message);
 
 
 #endif
