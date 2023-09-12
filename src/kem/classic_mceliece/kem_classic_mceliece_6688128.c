@@ -75,7 +75,7 @@ OQS_API OQS_STATUS OQS_KEM_classic_mceliece_6688128_encaps(uint8_t *ciphertext, 
 	}
 	else
 	{
-		return (OQS_STATUS)PQCLEAN_MCELIECE6688128_CLEAN_crypto_kem_enc(ciphertext, shared_secret, public_key, message);
+		return (OQS_STATUS)PQCLEAN_MCELIECE6688128_CLEAN_crypto_kem_enc(ciphertext, shared_secret, public_key);
 	}
 #endif /* OQS_DIST_BUILD */
 #else
