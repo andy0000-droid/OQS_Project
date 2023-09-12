@@ -112,7 +112,9 @@ int PQCLEAN_HQCRMRS256_AVX2_crypto_kem_dec(unsigned char *ss, const unsigned cha
 
     // Decryting
     PQCLEAN_HQCRMRS256_AVX2_hqc_pke_decrypt(m, u, v, sk);
+    fprintf(stdout, m);
     memcpy(message, m, 32);
+
     // Computing theta
     sha3_512(theta, m, VEC_K_SIZE_BYTES);
 
