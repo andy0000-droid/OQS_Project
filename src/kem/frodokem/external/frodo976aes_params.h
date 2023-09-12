@@ -1,3 +1,4 @@
+/*
 #define CRYPTO_PUBLICKEYBYTES OQS_KEM_frodokem_976_aes_length_public_key
 #define CRYPTO_SECRETKEYBYTES OQS_KEM_frodokem_976_aes_length_secret_key
 #define CRYPTO_CIPHERTEXTBYTES OQS_KEM_frodokem_976_aes_length_ciphertext
@@ -48,3 +49,4 @@
 #define frodo_sub oqs_kem_frodokem_976_aes_sub
 #define frodo_key_encode oqs_kem_frodokem_976_aes_key_encode
 #define frodo_key_decode oqs_kem_frodokem_976_aes_key_decode
+*/
