@@ -312,7 +312,7 @@ int main(int argc, char **argv)
 		OQS_destroy();
 		return EXIT_FAILURE;
 	}
-	else*/
+	else
 	{
 		alg_name = argv[1];
 		// size_t len = strlen(argv[2]);
