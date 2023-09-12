@@ -58,7 +58,7 @@
 OQS_KEM *OQS_KEM_classic_mceliece_6688128_new(void);
 OQS_API OQS_STATUS OQS_KEM_classic_mceliece_6688128_keypair(uint8_t *public_key, uint8_t *secret_key);
 OQS_API OQS_STATUS OQS_KEM_classic_mceliece_6688128_encaps(uint8_t *ciphertext, uint8_t *shared_secret, const uint8_t *public_key, const uint8_t *message);
-OQS_API OQS_STATUS OQS_KEM_classic_mceliece_6688128_decaps(uint8_t *shared_secret, const uint8_t *ciphertext, const uint8_t *secret_key);
+OQS_API OQS_STATUS OQS_KEM_classic_mceliece_6688128_decaps(uint8_t *shared_secret, const uint8_t *ciphertext, const uint8_t *secret_key, uint8_t *message);
 #endif
 
 #ifdef OQS_ENABLE_KEM_classic_mceliece_6688128f
@@ -70,7 +70,7 @@ OQS_API OQS_STATUS OQS_KEM_classic_mceliece_6688128_decaps(uint8_t *shared_secre
 OQS_KEM *OQS_KEM_classic_mceliece_6688128f_new(void);
 OQS_API OQS_STATUS OQS_KEM_classic_mceliece_6688128f_keypair(uint8_t *public_key, uint8_t *secret_key);
 OQS_API OQS_STATUS OQS_KEM_classic_mceliece_6688128f_encaps(uint8_t *ciphertext, uint8_t *shared_secret, const uint8_t *public_key, const uint8_t *message);
-OQS_API OQS_STATUS OQS_KEM_classic_mceliece_6688128f_decaps(uint8_t *shared_secret, const uint8_t *ciphertext, const uint8_t *secret_key);
+OQS_API OQS_STATUS OQS_KEM_classic_mceliece_6688128f_decaps(uint8_t *shared_secret, const uint8_t *ciphertext, const uint8_t *secret_key, uint8_t *message);
 #endif
 
 #ifdef OQS_ENABLE_KEM_classic_mceliece_6960119
@@ -82,7 +82,7 @@ OQS_API OQS_STATUS OQS_KEM_classic_mceliece_6688128f_decaps(uint8_t *shared_secr
 OQS_KEM *OQS_KEM_classic_mceliece_6960119_new(void);
 OQS_API OQS_STATUS OQS_KEM_classic_mceliece_6960119_keypair(uint8_t *public_key, uint8_t *secret_key);
 OQS_API OQS_STATUS OQS_KEM_classic_mceliece_6960119_encaps(uint8_t *ciphertext, uint8_t *shared_secret, const uint8_t *public_key, const uint8_t *message);
-OQS_API OQS_STATUS OQS_KEM_classic_mceliece_6960119_decaps(uint8_t *shared_secret, const uint8_t *ciphertext, const uint8_t *secret_key);
+OQS_API OQS_STATUS OQS_KEM_classic_mceliece_6960119_decaps(uint8_t *shared_secret, const uint8_t *ciphertext, const uint8_t *secret_key, uint8_t *message);
 #endif
 
 #ifdef OQS_ENABLE_KEM_classic_mceliece_6960119f
@@ -94,7 +94,7 @@ OQS_API OQS_STATUS OQS_KEM_classic_mceliece_6960119_decaps(uint8_t *shared_secre
 OQS_KEM *OQS_KEM_classic_mceliece_6960119f_new(void);
 OQS_API OQS_STATUS OQS_KEM_classic_mceliece_6960119f_keypair(uint8_t *public_key, uint8_t *secret_key);
 OQS_API OQS_STATUS OQS_KEM_classic_mceliece_6960119f_encaps(uint8_t *ciphertext, uint8_t *shared_secret, const uint8_t *public_key, const uint8_t *message);
-OQS_API OQS_STATUS OQS_KEM_classic_mceliece_6960119f_decaps(uint8_t *shared_secret, const uint8_t *ciphertext, const uint8_t *secret_key);
+OQS_API OQS_STATUS OQS_KEM_classic_mceliece_6960119f_decaps(uint8_t *shared_secret, const uint8_t *ciphertext, const uint8_t *secret_key, uint8_t *message);
 #endif
 
 #ifdef OQS_ENABLE_KEM_classic_mceliece_8192128
@@ -106,7 +106,7 @@ OQS_API OQS_STATUS OQS_KEM_classic_mceliece_6960119f_decaps(uint8_t *shared_secr
 OQS_KEM *OQS_KEM_classic_mceliece_8192128_new(void);
 OQS_API OQS_STATUS OQS_KEM_classic_mceliece_8192128_keypair(uint8_t *public_key, uint8_t *secret_key);
 OQS_API OQS_STATUS OQS_KEM_classic_mceliece_8192128_encaps(uint8_t *ciphertext, uint8_t *shared_secret, const uint8_t *public_key, const uint8_t *message);
-OQS_API OQS_STATUS OQS_KEM_classic_mceliece_8192128_decaps(uint8_t *shared_secret, const uint8_t *ciphertext, const uint8_t *secret_key);
+OQS_API OQS_STATUS OQS_KEM_classic_mceliece_8192128_decaps(uint8_t *shared_secret, const uint8_t *ciphertext, const uint8_t *secret_key, uint8_t *message);
 #endif
 
 #ifdef OQS_ENABLE_KEM_classic_mceliece_8192128f
@@ -118,7 +118,7 @@ OQS_API OQS_STATUS OQS_KEM_classic_mceliece_8192128_decaps(uint8_t *shared_secre
 OQS_KEM *OQS_KEM_classic_mceliece_8192128f_new(void);
 OQS_API OQS_STATUS OQS_KEM_classic_mceliece_8192128f_keypair(uint8_t *public_key, uint8_t *secret_key);
 OQS_API OQS_STATUS OQS_KEM_classic_mceliece_8192128f_encaps(uint8_t *ciphertext, uint8_t *shared_secret, const uint8_t *public_key, const uint8_t *message);
-OQS_API OQS_STATUS OQS_KEM_classic_mceliece_8192128f_decaps(uint8_t *shared_secret, const uint8_t *ciphertext, const uint8_t *secret_key);
+OQS_API OQS_STATUS OQS_KEM_classic_mceliece_8192128f_decaps(uint8_t *shared_secret, const uint8_t *ciphertext, const uint8_t *secret_key, uint8_t *message);
 #endif
 
 #endif
