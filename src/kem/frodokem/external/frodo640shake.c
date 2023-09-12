@@ -1,3 +1,4 @@
+/*
 #include <stddef.h>
 #include <stdint.h>
 
@@ -12,3 +13,4 @@
 
 #include "frodo_macrify_optimized.c"
 #include "frodo_macrify_shake_portable.c"
+*/

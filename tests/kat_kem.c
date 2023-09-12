@@ -293,7 +293,7 @@ int main(int argc, char **argv)
 
 	OQS_init();
 
-	/* if (1 || (argc != 2))
+	if (argc == 1)
 	{
 		fprintf(stderr, "%d\n", argc);
 		fprintf(stderr, "Usage: kat_kem algname message device\n");
