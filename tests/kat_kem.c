@@ -344,6 +344,25 @@ int main(int argc, char **argv)
 				fm = fopen(argv[3], "rb");
 			}
 		}
+		else if (!(strcmp(argv[2], "help")))
+		{
+			fprintf(stderr, "%d\n", argc);
+			fprintf(stderr, "Usage: kat_kem algname message device\n");
+			fprintf(stderr, "  algname: ");
+			for (size_t i = 0; i < OQS_KEM_algs_length; i++)
+			{
+				if (i > 0)
+				{
+					fprintf(stderr, ", ");
+				}
+				fprintf(stderr, "%s", OQS_KEM_alg_identifier(i));
+			}
+			fprintf(stderr, "\n");
+			printf("\n");
+			print_system_info();
+			OQS_destroy();
+			return EXIT_FAILURE;
+		}
 		else
 		{
 			fprintf(stderr, "Input proper option\n");
