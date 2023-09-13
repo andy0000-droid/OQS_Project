@@ -130,6 +130,8 @@ WORKDIR ${INSTALLDIR}
 FROM dev
 ARG INSTALLDIR
 
+EXPOSE 8080
+
 WORKDIR /
 
 # Improve size some more: liboqs.a not needed during operation
