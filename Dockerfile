@@ -43,7 +43,7 @@ RUN apk add build-base linux-headers \
 
 # get all sources
 WORKDIR /opt
-RUN git clone --depth 1 --branch main https://github.com/open-quantum-safe/liboqs && \
+RUN git clone --depth 1 --branch oqs https://github.com/andy0000-droid/OQS_Project.git liboqs && \
     git clone --depth 1 --branch master https://github.com/openssl/openssl.git && \
     git clone --depth 1 --branch main https://github.com/open-quantum-safe/oqs-provider.git && \
     wget https://curl.haxx.se/download/curl-${CURL_VERSION}.tar.gz && tar -zxvf curl-${CURL_VERSION}.tar.gz;
