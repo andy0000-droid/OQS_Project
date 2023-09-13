@@ -89,8 +89,8 @@ int PQCLEAN_HQCRMRS256_AVX2_crypto_kem_enc(unsigned char *ct, unsigned char *ss,
 
     // Encrypting m
     PQCLEAN_HQCRMRS256_AVX2_hqc_pke_encrypt(u, v, m, theta, pk);
-    fprintBstr(stdout, "u: ", u, VEC_N_256_SIZE_64);
-    fprintBstr(stdout, "v: ", v, VEC_N_256_SIZE_64);
+    // fprintBstr(stdout, "u: ", u, VEC_N_256_SIZE_64);
+    // fprintBstr(stdout, "v: ", v, VEC_N_256_SIZE_64);
 
     // Computing d
     sha512(d, m, VEC_K_SIZE_BYTES);
