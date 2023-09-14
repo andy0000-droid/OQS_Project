@@ -8,5 +8,5 @@ git clone --depth 1 --branch oqs https://github.com/andy0000-droid/OQS_Project.g
 
 #build liboqs
 cd liboqs && mkdir build && cd build && cmake -GNinja .. && ninja
-echo "test message" > plaintext.txt
+echo "test message" > plaintext.txt #file exist in build folder
 
