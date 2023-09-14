@@ -31,21 +31,21 @@
 extern "C" {
 #endif
 
-// /** Algorithm identifier for BIKE-L1 KEM (Round-4). */
-// #define OQS_KEM_alg_bike_l1 "BIKE-L1"
-// /** Algorithm identifier for BIKE-L3 KEM (Round-4). */
-// #define OQS_KEM_alg_bike_l3 "BIKE-L3"
+ /** Algorithm identifier for BIKE-L1 KEM (Round-4). */
+ #define OQS_KEM_alg_bike_l1 "BIKE-L1"
+ /** Algorithm identifier for BIKE-L3 KEM (Round-4). */
+ #define OQS_KEM_alg_bike_l3 "BIKE-L3"
 /** Algorithm identifier for BIKE-L5 KEM (Round-4). */
 #define OQS_KEM_alg_bike_l5 "BIKE-L5"
 ///// OQS_COPY_FROM_UPSTREAM_FRAGMENT_ALG_IDENTIFIER_START
-// /** Algorithm identifier for Classic-McEliece-348864 KEM. */
-// #define OQS_KEM_alg_classic_mceliece_348864 "Classic-McEliece-348864"
-// /** Algorithm identifier for Classic-McEliece-348864f KEM. */
-// #define OQS_KEM_alg_classic_mceliece_348864f "Classic-McEliece-348864f"
-// /** Algorithm identifier for Classic-McEliece-460896 KEM. */
-// #define OQS_KEM_alg_classic_mceliece_460896 "Classic-McEliece-460896"
-// /** Algorithm identifier for Classic-McEliece-460896f KEM. */
-// #define OQS_KEM_alg_classic_mceliece_460896f "Classic-McEliece-460896f"
+/** Algorithm identifier for Classic-McEliece-348864 KEM. */
+#define OQS_KEM_alg_classic_mceliece_348864 "Classic-McEliece-348864"
+/** Algorithm identifier for Classic-McEliece-348864f KEM. */
+#define OQS_KEM_alg_classic_mceliece_348864f "Classic-McEliece-348864f"
+/** Algorithm identifier for Classic-McEliece-460896 KEM. */
+#define OQS_KEM_alg_classic_mceliece_460896 "Classic-McEliece-460896"
+/** Algorithm identifier for Classic-McEliece-460896f KEM. */
+#define OQS_KEM_alg_classic_mceliece_460896f "Classic-McEliece-460896f"
 /** Algorithm identifier for Classic-McEliece-6688128 KEM. */
 #define OQS_KEM_alg_classic_mceliece_6688128 "Classic-McEliece-6688128"
 /** Algorithm identifier for Classic-McEliece-6688128f KEM. */
@@ -58,29 +58,29 @@ extern "C" {
 #define OQS_KEM_alg_classic_mceliece_8192128 "Classic-McEliece-8192128"
 /** Algorithm identifier for Classic-McEliece-8192128f KEM. */
 #define OQS_KEM_alg_classic_mceliece_8192128f "Classic-McEliece-8192128f"
-// /** Algorithm identifier for HQC-128 KEM. */
-// #define OQS_KEM_alg_hqc_128 "HQC-128"
-// /** Algorithm identifier for HQC-192 KEM. */
-// #define OQS_KEM_alg_hqc_192 "HQC-192"
+/** Algorithm identifier for HQC-128 KEM. */
+#define OQS_KEM_alg_hqc_128 "HQC-128"
+/** Algorithm identifier for HQC-192 KEM. */
+#define OQS_KEM_alg_hqc_192 "HQC-192"
 /** Algorithm identifier for HQC-256 KEM. */
 #define OQS_KEM_alg_hqc_256 "HQC-256"
-// /** Algorithm identifier for Kyber512 KEM. */
-// #define OQS_KEM_alg_kyber_512 "Kyber512"
-// /** Algorithm identifier for Kyber768 KEM. */
-// #define OQS_KEM_alg_kyber_768 "Kyber768"
+/** Algorithm identifier for Kyber512 KEM. */
+#define OQS_KEM_alg_kyber_512 "Kyber512"
+/** Algorithm identifier for Kyber768 KEM. */
+#define OQS_KEM_alg_kyber_768 "Kyber768"
 /** Algorithm identifier for Kyber1024 KEM. */
 #define OQS_KEM_alg_kyber_1024 "Kyber1024"
 ///// OQS_COPY_FROM_UPSTREAM_FRAGMENT_ALG_IDENTIFIER_END
 /** Algorithm identifier for sntrup761 KEM. */
 #define OQS_KEM_alg_ntruprime_sntrup761 "sntrup761"
- /** Algorithm identifier for FrodoKEM-640-AES KEM. */
- #define OQS_KEM_alg_frodokem_640_aes "FrodoKEM-640-AES"
- /** Algorithm identifier for FrodoKEM-640-SHAKE KEM. */
- #define OQS_KEM_alg_frodokem_640_shake "FrodoKEM-640-SHAKE"
- /** Algorithm identifier for FrodoKEM-976-AES KEM. */
- #define OQS_KEM_alg_frodokem_976_aes "FrodoKEM-976-AES"
- /** Algorithm identifier for FrodoKEM-976-SHAKE KEM. */
- #define OQS_KEM_alg_frodokem_976_shake "FrodoKEM-976-SHAKE"
+/** Algorithm identifier for FrodoKEM-640-AES KEM. */
+#define OQS_KEM_alg_frodokem_640_aes "FrodoKEM-640-AES"
+/** Algorithm identifier for FrodoKEM-640-SHAKE KEM. */
+#define OQS_KEM_alg_frodokem_640_shake "FrodoKEM-640-SHAKE"
+/** Algorithm identifier for FrodoKEM-976-AES KEM. */
+#define OQS_KEM_alg_frodokem_976_aes "FrodoKEM-976-AES"
+/** Algorithm identifier for FrodoKEM-976-SHAKE KEM. */
+#define OQS_KEM_alg_frodokem_976_shake "FrodoKEM-976-SHAKE"
 /** Algorithm identifier for FrodoKEM-1344-AES KEM. */
 #define OQS_KEM_alg_frodokem_1344_aes "FrodoKEM-1344-AES"
 /** Algorithm identifier for FrodoKEM-1344-SHAKE KEM. */
@@ -143,6 +143,7 @@ typedef struct OQS_KEM {
 	/** Whether the KEM offers IND-CCA security (TRUE) or IND-CPA security (FALSE). */
 	bool ind_cca;
 
+	// size_t length_plaintext;
 	/** The (maximum) length, in bytes, of public keys for this KEM. */
 	size_t length_public_key;
 	/** The (maximum) length, in bytes, of secret keys for this KEM. */

@@ -105,6 +105,11 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 		goto algo_not_enabled;
 	}
 
+	if (kem->claimed_nist_level != 5){
+		fprintf(stderr, "Only use NIST level 5\n");
+		goto err;
+	}
+
 	for (uint8_t i = 0; i < 48; i++)
 	{
 		entropy_input[i] = i;

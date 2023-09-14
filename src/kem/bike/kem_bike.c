@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 #include <oqs/kem_bike.h>
-/*
+
 #ifdef OQS_ENABLE_KEM_bike_l1
 OQS_KEM *OQS_KEM_bike_l1_new(void) {
 	OQS_KEM *kem = malloc(sizeof(OQS_KEM));
@@ -53,7 +53,7 @@ OQS_KEM *OQS_KEM_bike_l3_new(void) {
 	return kem;
 }
 #endif
-*/
+
 #ifdef OQS_ENABLE_KEM_bike_l5
 OQS_KEM *OQS_KEM_bike_l5_new(void) {
 	OQS_KEM *kem = malloc(sizeof(OQS_KEM));

@@ -5,49 +5,46 @@
 
 #include <oqs/oqs.h>
 
-// #ifdef OQS_ENABLE_KEM_classic_mceliece_348864
-// #define OQS_KEM_classic_mceliece_348864_length_public_key 261120
-// #define OQS_KEM_classic_mceliece_348864_length_secret_key 6492
-// #define OQS_KEM_classic_mceliece_348864_length_ciphertext 96
-// #define OQS_KEM_classic_mceliece_348864_length_shared_secret 32
-// OQS_KEM *OQS_KEM_classic_mceliece_348864_new(void);
-// OQS_API OQS_STATUS OQS_KEM_classic_mceliece_348864_keypair(uint8_t *public_key, uint8_t *secret_key);
-// OQS_API OQS_STATUS OQS_KEM_classic_mceliece_348864_encaps(uint8_t *ciphertext, uint8_t *shared_secret, const uint8_t *public_key);
-// OQS_API OQS_STATUS OQS_KEM_classic_mceliece_348864_decaps(uint8_t *shared_secret, const uint8_t *ciphertext, const uint8_t *secret_key);
-// #endif
-//
-// #ifdef OQS_ENABLE_KEM_classic_mceliece_348864f
-// #define OQS_KEM_classic_mceliece_348864f_length_public_key 261120
-// #define OQS_KEM_classic_mceliece_348864f_length_secret_key 6492
-// #define OQS_KEM_classic_mceliece_348864f_length_ciphertext 96
-// #define OQS_KEM_classic_mceliece_348864f_length_shared_secret 32
-// OQS_KEM *OQS_KEM_classic_mceliece_348864f_new(void);
-// OQS_API OQS_STATUS OQS_KEM_classic_mceliece_348864f_keypair(uint8_t *public_key, uint8_t *secret_key);
-// OQS_API OQS_STATUS OQS_KEM_classic_mceliece_348864f_encaps(uint8_t *ciphertext, uint8_t *shared_secret, const uint8_t *public_key);
-// OQS_API OQS_STATUS OQS_KEM_classic_mceliece_348864f_decaps(uint8_t *shared_secret, const uint8_t *ciphertext, const uint8_t *secret_key);
-// #endif
-//
-// #ifdef OQS_ENABLE_KEM_classic_mceliece_460896
-// #define OQS_KEM_classic_mceliece_460896_length_public_key 524160
-// #define OQS_KEM_classic_mceliece_460896_length_secret_key 13608
-// #define OQS_KEM_classic_mceliece_460896_length_ciphertext 156
-// #define OQS_KEM_classic_mceliece_460896_length_shared_secret 32
-// OQS_KEM *OQS_KEM_classic_mceliece_460896_new(void);
-// OQS_API OQS_STATUS OQS_KEM_classic_mceliece_460896_keypair(uint8_t *public_key, uint8_t *secret_key);
-// OQS_API OQS_STATUS OQS_KEM_classic_mceliece_460896_encaps(uint8_t *ciphertext, uint8_t *shared_secret, const uint8_t *public_key);
-// OQS_API OQS_STATUS OQS_KEM_classic_mceliece_460896_decaps(uint8_t *shared_secret, const uint8_t *ciphertext, const uint8_t *secret_key);
-// #endif
-//
-// #ifdef OQS_ENABLE_KEM_classic_mceliece_460896f
-// #define OQS_KEM_classic_mceliece_460896f_length_public_key 524160
-// #define OQS_KEM_classic_mceliece_460896f_length_secret_key 13608
-// #define OQS_KEM_classic_mceliece_460896f_length_ciphertext 156
-// #define OQS_KEM_classic_mceliece_460896f_length_shared_secret 32
-// OQS_KEM *OQS_KEM_classic_mceliece_460896f_new(void);
-// OQS_API OQS_STATUS OQS_KEM_classic_mceliece_460896f_keypair(uint8_t *public_key, uint8_t *secret_key);
-// OQS_API OQS_STATUS OQS_KEM_classic_mceliece_460896f_encaps(uint8_t *ciphertext, uint8_t *shared_secret, const uint8_t *public_key);
-// OQS_API OQS_STATUS OQS_KEM_classic_mceliece_460896f_decaps(uint8_t *shared_secret, const uint8_t *ciphertext, const uint8_t *secret_key);
-// #endif
+#ifdef OQS_ENABLE_KEM_classic_mceliece_348864
+#define OQS_KEM_classic_mceliece_348864_length_public_key 261120
+#define OQS_KEM_classic_mceliece_348864_length_secret_key 6492
+#define OQS_KEM_classic_mceliece_348864_length_ciphertext 96
+#define OQS_KEM_classic_mceliece_348864_length_shared_secret 32
+OQS_KEM *OQS_KEM_classic_mceliece_348864_new(void);
+OQS_API OQS_STATUS OQS_KEM_classic_mceliece_348864_keypair(uint8_t *public_key, uint8_t *secret_key);
+OQS_API OQS_STATUS OQS_KEM_classic_mceliece_348864_encaps(uint8_t *ciphertext, uint8_t *shared_secret, const uint8_t *public_key, const uint8_t *message);
+OQS_API OQS_STATUS OQS_KEM_classic_mceliece_348864_decaps(uint8_t *shared_secret, const uint8_t *ciphertext, const uint8_t *secret_key, uint8_t *message);
+#endif
+#ifdef OQS_ENABLE_KEM_classic_mceliece_348864f
+#define OQS_KEM_classic_mceliece_348864f_length_public_key 261120
+#define OQS_KEM_classic_mceliece_348864f_length_secret_key 6492
+#define OQS_KEM_classic_mceliece_348864f_length_ciphertext 96
+#define OQS_KEM_classic_mceliece_348864f_length_shared_secret 32
+OQS_KEM *OQS_KEM_classic_mceliece_348864f_new(void);
+OQS_API OQS_STATUS OQS_KEM_classic_mceliece_348864f_keypair(uint8_t *public_key, uint8_t *secret_key);
+OQS_API OQS_STATUS OQS_KEM_classic_mceliece_348864f_encaps(uint8_t *ciphertext, uint8_t *shared_secret, const uint8_t *public_key, const uint8_t *message);
+OQS_API OQS_STATUS OQS_KEM_classic_mceliece_348864f_decaps(uint8_t *shared_secret, const uint8_t *ciphertext, const uint8_t *secret_key, uint8_t *message);
+#endif
+#ifdef OQS_ENABLE_KEM_classic_mceliece_460896
+#define OQS_KEM_classic_mceliece_460896_length_public_key 524160
+#define OQS_KEM_classic_mceliece_460896_length_secret_key 13608
+#define OQS_KEM_classic_mceliece_460896_length_ciphertext 156
+#define OQS_KEM_classic_mceliece_460896_length_shared_secret 32
+OQS_KEM *OQS_KEM_classic_mceliece_460896_new(void);
+OQS_API OQS_STATUS OQS_KEM_classic_mceliece_460896_keypair(uint8_t *public_key, uint8_t *secret_key);
+OQS_API OQS_STATUS OQS_KEM_classic_mceliece_460896_encaps(uint8_t *ciphertext, uint8_t *shared_secret, const uint8_t *public_key, const uint8_t *message);
+OQS_API OQS_STATUS OQS_KEM_classic_mceliece_460896_decaps(uint8_t *shared_secret, const uint8_t *ciphertext, const uint8_t *secret_key, uint8_t *message);
+#endif
+#ifdef OQS_ENABLE_KEM_classic_mceliece_460896f
+#define OQS_KEM_classic_mceliece_460896f_length_public_key 524160
+#define OQS_KEM_classic_mceliece_460896f_length_secret_key 13608
+#define OQS_KEM_classic_mceliece_460896f_length_ciphertext 156
+#define OQS_KEM_classic_mceliece_460896f_length_shared_secret 32
+OQS_KEM *OQS_KEM_classic_mceliece_460896f_new(void);
+OQS_API OQS_STATUS OQS_KEM_classic_mceliece_460896f_keypair(uint8_t *public_key, uint8_t *secret_key);
+OQS_API OQS_STATUS OQS_KEM_classic_mceliece_460896f_encaps(uint8_t *ciphertext, uint8_t *shared_secret, const uint8_t *public_key, const uint8_t *message);
+OQS_API OQS_STATUS OQS_KEM_classic_mceliece_460896f_decaps(uint8_t *shared_secret, const uint8_t *ciphertext, const uint8_t *secret_key, uint8_t *message);
+#endif
 
 #ifdef OQS_ENABLE_KEM_classic_mceliece_6688128
 // #define OQS_KEM_classic_mceliece_6688128_length_plaintext 32
