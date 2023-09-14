@@ -168,6 +168,7 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 		fclose(fsk);
 		fpk = NULL;
 		fsk = NULL;
+		fprintf(stdout, "done\n");
 		ret = OQS_SUCCESS;
 		goto cleanup;
 	}
@@ -213,8 +214,6 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 		fss = NULL;
 		free(m);
 		m = NULL;
-		//fclose(fsk);
-		//fsk = NULL;
 	}
 	if (device == 2 && fp != NULL)
 	{
@@ -274,15 +273,20 @@ cleanup:
 	if (kem != NULL)
 	{
 		if (secret_key != NULL)
+			fprintf(stdout, "se\n");
 			OQS_MEM_secure_free(secret_key, kem->length_secret_key);
 		if (shared_secret_e != NULL)
+			fprintf(stdout, "sh_e\n");
 			OQS_MEM_secure_free(shared_secret_e, kem->length_shared_secret);
 		if (shared_secret_d != NULL)
+			fprintf(stdout, "sh_d\n");
 			OQS_MEM_secure_free(shared_secret_d, kem->length_shared_secret);
 	}
 	if (public_key != NULL)
+		fprintf(stdout, "pu\n");
 		OQS_MEM_insecure_free(public_key);
 	if (ciphertext != NULL)
+		fprintf(stdout, "ci\n");
 		OQS_MEM_insecure_free(ciphertext);
 	OQS_KEM_free(kem);
 	return ret;

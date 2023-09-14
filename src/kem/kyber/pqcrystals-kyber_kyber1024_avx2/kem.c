@@ -78,7 +78,7 @@ int crypto_kem_enc(uint8_t *ct,
 
   /* Don't release system RNG output */
   hash_h(buf, buf, KYBER_SYMBYTES);
-  fprintBstr(stdout, "hashed :", buf,KYBER_SYMBYTES);
+  //fprintBstr(stdout, "hashed :", buf,KYBER_SYMBYTES);
   /* Multitarget countermeasure for coins + contributory KEM */
   hash_h(buf+KYBER_SYMBYTES, pk, KYBER_PUBLICKEYBYTES);
   hash_g(kr, buf, 2*KYBER_SYMBYTES);
