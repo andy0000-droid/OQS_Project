@@ -22,3 +22,5 @@ RUN cmake -G"Ninja" .. && ninja
 
 RUN LDFLAGS="-Wl,-rpath -Wl,${INSTALLDIR}/lib64" ./config shared --prefix=${INSTALLDIR} && \
     make ${MAKE_DEFINES} && make install_sw install_ssldirs;
+
+CMD [ "sh" ]
