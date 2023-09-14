@@ -8,7 +8,10 @@ ARG CURL_VERSION
 ARG LIBOQS_BUILD_DEFINES
 ARG INSTALLDIR
 
-RUN apt install cmake gcc libtool libssl-dev make ninja-build git -y
+RUN apt install cmake 
+RUN apt install gcc 
+RUN apt install libtool
+RUN apt install libssl-dev make ninja-build git -y
 
 WORKDIR /opt
 RUN git clone --depth 1 --branch oqs https://github.com/andy0000-droid/OQS_Project.git liboqs && \
