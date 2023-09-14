@@ -8,7 +8,7 @@ ARG CURL_VERSION
 ARG LIBOQS_BUILD_DEFINES
 ARG INSTALLDIR
 
-RUN apt install cmake 
+RUN apt install cmake -y
 RUN apt install gcc 
 RUN apt install libtool
 RUN apt install libssl-dev make ninja-build git -y
