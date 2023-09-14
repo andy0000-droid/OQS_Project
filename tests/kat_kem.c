@@ -168,6 +168,8 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 		fclose(fsk);
 		fpk = NULL;
 		fsk = NULL;
+		ret = OQS_SUCCESS;
+		goto cleanup;
 	}
 	if (device == 1 || device == 0)
 	{
