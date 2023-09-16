@@ -10,7 +10,7 @@ ARG INSTALLDIR
 
 RUN apt-get update && apt-get upgrade -y
 
-RUn apt-get install apt-utils
+RUN apt-get install apt-utils
 RUN apt-get install snapd -y
 RUN snap install cmake
 RUN apt-get install gcc 
