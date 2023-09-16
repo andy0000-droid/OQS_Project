@@ -36,10 +36,10 @@ RUN apk update && apk upgrade
 
 # Get all software packages required for builing all components:
 RUN apk add build-base linux-headers \
-            libtool automake autoconf cmake ninja \
-            make \
-            openssl openssl-dev \
-            git wget
+    libtool automake autoconf cmake ninja \
+    make \
+    openssl openssl-dev \
+    git wget
 
 # get all sources
 WORKDIR /opt
@@ -83,9 +83,9 @@ RUN wget https://letsencrypt.org/certs/isrgrootx1.pem -O oqs-bundle.pem && cat $
 #                    --enable-debug \
 
 RUN env LDFLAGS=-Wl,-R${INSTALLDIR}/lib64  \
-        ./configure --prefix=${INSTALLDIR} \
-                    --with-ca-bundle=${INSTALLDIR}/oqs-bundle.pem \
-                    --with-ssl=${INSTALLDIR} && \
+    ./configure --prefix=${INSTALLDIR} \
+    --with-ca-bundle=${INSTALLDIR}/oqs-bundle.pem \
+    --with-ssl=${INSTALLDIR} && \
     make ${MAKE_DEFINES} && make install && mv oqs-bundle.pem ${INSTALLDIR};
 
 # Download current test.openquantumsafe.org test CA cert
@@ -138,6 +138,6 @@ RUN rm ${INSTALLDIR}/lib64/liboqs*
 # Enable a normal user to create new server keys off set CA
 RUN addgroup -g 1000 -S oqs && adduser --uid 1000 -S oqs -G oqs && chown -R oqs.oqs /opt/test && chmod go+r ${INSTALLDIR}/bin/CA.key && chmod go+w ${INSTALLDIR}/bin/CA.srl
 
-USER oqs
+USER root
 CMD ["serverstart.sh"]
 STOPSIGNAL SIGTERM
