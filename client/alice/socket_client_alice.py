@@ -57,28 +57,7 @@ while True:
         #cmd[1] = 'kyber1024'
         #subprocess.Popen(args = cmd, text=True, shell = True)
         break
-    
-    while True:
-        #Response ciphertext.txt
-        filename = client_socket.recv(1024).decode()
-        print(f'Requested file: {filename}')
 
-        if filename == 'quit':
-            FLAG = True
-            break
-
-        try:
-            with open(prefix + filename, 'rb') as file:
-                content = file.read()
-                # Send response back to the client (file content)
-                client_socket.send(content)
-                print(f'Sent file: {filename}')
-                break
-
-        except FileNotFoundError:
-            client_socket.send('error'.encode())
-            print(f'File not found: {filename}')
-            continue
     if FLAG:
         break
     else:

@@ -1,5 +1,10 @@
 #!/bin/bash
 
+rm *.txt
+rm shared/*.txt
+
+docker run --rm -it openquantumsafe/curl curl -k https://13.125.30.230:4433/qkey?v= > plaintext.txt
+
 KEM_ALG=$1
 docker cp ./socket_client_alice.py client_a:/opt/socket/ # copy socket python file into docker
 docker cp ./socket_client_bob.py client_a:/opt/socket/ # copy socket python file into docker
