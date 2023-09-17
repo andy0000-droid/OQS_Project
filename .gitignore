@@ -11,3 +11,6 @@ client/alice/shared_secret.txt
 client/alice/plaintext.txt
 client/alice/*.txt
 client/alice/plaintext.txt
+client/alice/shared_secret.txt
+client/alice/shared_secret.txt
+client/alice/shared/cipher_text.txt
