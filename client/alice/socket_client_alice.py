@@ -1,5 +1,9 @@
 import socket
 import subprocess
+import shlex
+import sys
+
+argv = sys.argv[1:]
 
 # Create a socket object
 server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
@@ -16,14 +20,18 @@ print('Waiting for a connection...')
 client_socket, client_address = server_socket.accept()
 print('Connected to:', client_address)
 FLAG = False
+prefix = '/opt/socket/'
+i = 0
 
 while True:
-    filename_request = input('Enter filename request or "quit" to quit: ')
+    #filename_request = input('Enter filename request or "quit" to quit: ')
+    filename_request = argv[i]
     while True:
         # Request publickey.txt
         client_socket.send(filename_request.encode())
 
         if filename_request == 'quit':
+            FLAG = True
             break
 
         print(f'Request file: {filename_request}')
@@ -42,9 +50,12 @@ while True:
             filename_request = input('Enter filename request or "quit" to quit: ')
             continue
 
-        with open(filename_request,"wb") as f:
+        with open(prefix + filename_request,"wb") as f:
             f.write(received_data)     
         print(f'Received File : "{filename_request}"')
+        #cmd = ['./kat_kem', 'KEM_ALG', 'client_a', 'plaintext.txt', 'publickey.txt']
+        #cmd[1] = 'kyber1024'
+        #subprocess.Popen(args = cmd, text=True, shell = True)
         break
     
     while True:
@@ -57,7 +68,7 @@ while True:
             break
 
         try:
-            with open(filename, 'rb') as file:
+            with open(prefix + filename, 'rb') as file:
                 content = file.read()
                 # Send response back to the client (file content)
                 client_socket.send(content)
@@ -69,6 +80,10 @@ while True:
             print(f'File not found: {filename}')
             continue
     if FLAG:
+        break
+    else:
+        i += 1
+    if i > (len(argv) - 1):
         break
 # Close the connection
 client_socket.close()

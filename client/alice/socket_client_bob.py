@@ -1,17 +1,24 @@
 import socket
+import subprocess
+import shlex
+import sys
+
+argv = sys.argv[1:]
 
 # Create a socket object
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Connect to the server's address and port
-server_address = ('172.18.0.3', 12345)
+server_address = ('172.18.0.4', 12345)
 client_socket.connect(server_address)
 print('Connected to:', server_address)
 FLAG = False
+prefix = '/opt/socket/'
+i = 0
 
 while True:
     while True:
-        #Response ciphertext.txt
+        #Response publickey.txt
         filename = client_socket.recv(1024).decode()
         print(f'Requested file: {filename}')
 
@@ -20,7 +27,7 @@ while True:
             break
 
         try:
-            with open(filename, 'rb') as file:
+            with open(prefix + filename, 'rb') as file:
                 content = file.read()
                 # Send response back to the client (file content)
                 client_socket.send(content)
@@ -32,9 +39,10 @@ while True:
             print(f'File not found: {filename}')
             continue
     
-    filename_request = input('Enter filename request or "quit" to quit: ')
+    #filename_request = input('Enter filename request or "quit" to quit: ')
+    filename_request = argv[i]
     while True:
-        # Request publickey.txt
+        # Request ciphertext.txt
         client_socket.send(filename_request.encode())
 
         if filename_request == 'quit':
@@ -57,11 +65,15 @@ while True:
             filename_request = input('Enter filename request or "quit" to quit: ')
             continue
 
-        with open(filename_request,"wb") as f:
+        with open(prefix + filename_request,"wb") as f:
             f.write(received_data)     
         print(f'Received File : "{filename_request}"')
         break
     if FLAG:
+        break
+    else:
+        i += 0
+    if i > (len(argv) - 1):
         break
 
 # Close the connection    
