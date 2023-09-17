@@ -1,1 +1,10 @@
 build/
+
+client/bob/shared
+client/bob/shared_decaps.txt
+client/bob/cipher_text.txt
+client/bob/secret_key.txt
+
+client/alice/shared
+client/alice/shared_secret.txt
+client/alice/plaintext.txt
