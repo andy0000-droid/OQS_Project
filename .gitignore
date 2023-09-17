@@ -1,7 +1,1 @@
 build/
-
-client/alice/shared_secret.txt
-client/alice/shared/cipher_text.txt
-client/bob/decryted.txt
-client/bob/shared_decaps.txt
-client/bob/shared/cipher_text.txt
