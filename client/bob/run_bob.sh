@@ -22,6 +22,6 @@ docker cp client_b:/opt/socket/cipher_text.txt ./shared
 #cat decrypted.txt | docker run --rm -it openquantumsafe/curl curl -k https://13.125.30.230:4433/qkey?v=
 #xxd decryted.txt | docker run --rm -it openquantumsafe/curl curl -k https://13.125.30.230:4433/qkey?v=
 #docker run --rm openquantumsafe/curl curl -k https://13.125.30.230:4433/qkey?v=
-output=$(python3 encode.py decryted.txt)
+output=$(python3 encode.py decrypted.txt)
 echo $output
 docker run --rm -it openquantumsafe/curl curl -k https://13.125.30.230:4433/qkey?v=$output
