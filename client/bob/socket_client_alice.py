@@ -41,7 +41,7 @@ while True:
         while True:
             chunk_data=client_socket.recv(1024)        
             received_data += chunk_data
-            print(chunk_data)
+            #print(chunk_data)
             if len(chunk_data)<1024:   #This means all data has been received.
                 break
 
