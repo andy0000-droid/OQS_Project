@@ -69,13 +69,15 @@ int crypto_kem_enc(uint8_t *ct,
   /* Will contain key, coins */
   uint8_t kr[2*KYBER_SYMBYTES];
   //fprintf(stdout, "Crystal Kyber start\n");
-  // if (m == "") {
-  //   randombytes(buf, KYBER_SYMBYTES);
-  // }
-  // else {
-  //   memcpy(buf, m, KYBER_SYMBYTES);
-  // }
-
+  if (m == NULL) {
+    fprintf(stdout, "No message\n");
+    randombytes(buf, KYBER_SYMBYTES);
+  }
+  else {
+    memcpy(buf, m, KYBER_SYMBYTES);
+    fprintBstr(stdout, "Input message: ", buf, KYBER_SYMBYTES);
+  }
+  // memcpy(buf, m, KYBER_SYMBYTES);
   /* Don't release system RNG output */
   hash_h(buf, buf, KYBER_SYMBYTES);
   fprintBstr(stdout, "hashed :", buf,KYBER_SYMBYTES);
