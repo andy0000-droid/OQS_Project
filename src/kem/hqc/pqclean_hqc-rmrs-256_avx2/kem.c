@@ -73,7 +73,7 @@ int PQCLEAN_HQCRMRS256_AVX2_crypto_kem_keypair(unsigned char *pk, unsigned char 
 int PQCLEAN_HQCRMRS256_AVX2_crypto_kem_enc(unsigned char *ct, unsigned char *ss, const unsigned char *pk, const unsigned char *message) {
 
     uint8_t theta[SHA512_BYTES] = {0};
-    uint8_t m[VEC_K_SIZE_BYTES] = {0};
+    uint8_t m[VEC_K_SIZE_BYTES];
     static uint64_t u[VEC_N_256_SIZE_64] = {0};
     uint64_t v[VEC_N1N2_256_SIZE_64] = {0};
     unsigned char d[SHA512_BYTES] = {0};
@@ -83,6 +83,9 @@ int PQCLEAN_HQCRMRS256_AVX2_crypto_kem_enc(unsigned char *ct, unsigned char *ss,
     // randombytes(m, VEC_K_SIZE_BYTES);
     memset(m, 0, VEC_K_SIZE_BYTES);
     memcpy(m, message, VEC_K_SIZE_BYTES);
+
+    fprintBstr(stdout, "Input messaege: ", m, VEC_K_SIZE_BYTES);
+    fprintBstr(stdout, "Input messaege: ", message, VEC_K_SIZE_BYTES);
 
     // Computing theta
     sha3_512(theta, m, VEC_K_SIZE_BYTES);

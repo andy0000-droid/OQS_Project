@@ -20,6 +20,7 @@ OQS_KEM *OQS_KEM_classic_mceliece_8192128_new(void)
 	kem->claimed_nist_level = 5;
 	kem->ind_cca = true;
 
+	kem->length_plaintext = OQS_KEM_classic_mceliece_8192128_length_plaintext;
 	kem->length_public_key = OQS_KEM_classic_mceliece_8192128_length_public_key;
 	kem->length_secret_key = OQS_KEM_classic_mceliece_8192128_length_secret_key;
 	kem->length_ciphertext = OQS_KEM_classic_mceliece_8192128_length_ciphertext;

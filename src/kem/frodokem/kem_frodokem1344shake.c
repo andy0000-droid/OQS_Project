@@ -6,10 +6,12 @@
 
 #ifdef OQS_ENABLE_KEM_frodokem_1344_shake
 
-OQS_KEM *OQS_KEM_frodokem_1344_shake_new(void) {
+OQS_KEM *OQS_KEM_frodokem_1344_shake_new(void)
+{
 
 	OQS_KEM *kem = malloc(sizeof(OQS_KEM));
-	if (kem == NULL) {
+	if (kem == NULL)
+	{
 		return NULL;
 	}
 	kem->method_name = OQS_KEM_alg_frodokem_1344_shake;
@@ -18,6 +20,7 @@ OQS_KEM *OQS_KEM_frodokem_1344_shake_new(void) {
 	kem->claimed_nist_level = 5;
 	kem->ind_cca = true;
 
+	kem->length_plaintext = OQS_KEM_frodokem_1344_shake_length_plaintext;
 	kem->length_public_key = OQS_KEM_frodokem_1344_shake_length_public_key;
 	kem->length_secret_key = OQS_KEM_frodokem_1344_shake_length_secret_key;
 	kem->length_ciphertext = OQS_KEM_frodokem_1344_shake_length_ciphertext;

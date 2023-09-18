@@ -50,6 +50,7 @@ OQS_API OQS_STATUS OQS_KEM_frodokem_976_shake_decaps(uint8_t *shared_secret, con
 #endif
 
 #ifdef OQS_ENABLE_KEM_frodokem_1344_aes
+#define OQS_KEM_frodokem_1344_aes_length_plaintext 32
 #define OQS_KEM_frodokem_1344_aes_length_public_key 21520
 #define OQS_KEM_frodokem_1344_aes_length_secret_key 43088
 #define OQS_KEM_frodokem_1344_aes_length_ciphertext 21632
@@ -61,6 +62,7 @@ OQS_API OQS_STATUS OQS_KEM_frodokem_1344_aes_decaps(uint8_t *shared_secret, cons
 #endif
 
 #ifdef OQS_ENABLE_KEM_frodokem_1344_shake
+#define OQS_KEM_frodokem_1344_shake_length_plaintext 32
 #define OQS_KEM_frodokem_1344_shake_length_public_key 21520
 #define OQS_KEM_frodokem_1344_shake_length_secret_key 43088
 #define OQS_KEM_frodokem_1344_shake_length_ciphertext 21632

@@ -137,6 +137,7 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 	// 	fprintf(stderr, "[kat_kem] %s ERROR: malloc failed!\n", method_name);
 	// 	goto err;
 	// }
+	fprintf(fh, "%s\n", method_name);
 	if (fp == NULL)
 	{
 		fprintf(fh, "keypair need\n");
@@ -192,7 +193,8 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 		m = malloc(kem->length_plaintext);
 		freadBstr(fm, m, kem->length_plaintext);
 		//memcpy(m, message, strlen(message));
-		//fprintBstr(fh, "initial message = ", m, kem->length_plaintext);
+		
+		fprintBstr(fh, "initial message = ", m, kem->length_plaintext);
 		fct = fopen("cipher_text.txt", "wb");
 		fss = fopen("shared_secret.txt", "wb");
 

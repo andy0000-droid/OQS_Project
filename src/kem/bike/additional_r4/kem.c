@@ -11,16 +11,19 @@
 #include "sampling.h"
 #include "sha.h"
 
-static void fprintBstr(FILE *fp, const char *S, const uint8_t *A, size_t L) {
-	size_t i;
-	fprintf(fp, "%s", S);
-	for (i = 0; i < L; i++) {
-		fprintf(fp, "%02X", A[i]);
-	}
-	if (L == 0) {
-		fprintf(fp, "00");
-	}
-	fprintf(fp, "\n");
+static void fprintBstr(FILE *fp, const char *S, const uint8_t *A, size_t L)
+{
+  size_t i;
+  fprintf(fp, "%s", S);
+  for (i = 0; i < L; i++)
+  {
+    fprintf(fp, "%02X", A[i]);
+  }
+  if (L == 0)
+  {
+    fprintf(fp, "00");
+  }
+  fprintf(fp, "\n");
 }
 
 // m_t and seed_t have the same size and thus can be considered
@@ -77,7 +80,7 @@ _INLINE_ ret_t function_k(OUT ss_t *out, IN const m_t *m, IN const ct_t *ct)
   DEFER_CLEANUP(sha_dgst_t dgst = {0}, sha_dgst_cleanup);
 
   // Copy every element, padded to the nearest byte
-  tmp.m  = *m;
+  tmp.m = *m;
   tmp.c0 = ct->c0;
   tmp.c1 = ct->c1;
 
@@ -99,7 +102,7 @@ _INLINE_ ret_t encrypt(OUT ct_t *ct,
   // Pad the public key and the ciphertext
   pad_r_t p_ct = {0};
   pad_r_t p_pk = {0};
-  p_pk.val     = *pk;
+  p_pk.val = *pk;
 
   // Generate the ciphertext
   // ct = pk * e1 + e0
@@ -112,7 +115,8 @@ _INLINE_ ret_t encrypt(OUT ct_t *ct,
   GUARD(function_l(&ct->c1, e));
 
   // m xor L(e0, e1)
-  for(size_t i = 0; i < sizeof(*m); i++) {
+  for (size_t i = 0; i < sizeof(*m); i++)
+  {
     ct->c1.raw[i] ^= m->raw[i];
   }
 
@@ -131,7 +135,8 @@ _INLINE_ ret_t reencrypt(OUT m_t *m, IN const pad_e_t *e, IN const ct_t *l_ct)
   GUARD(function_l(&tmp, e));
 
   // m' = c1 ^ L(e')
-  for(size_t i = 0; i < sizeof(*m); i++) {
+  for (size_t i = 0; i < sizeof(*m); i++)
+  {
     m->raw[i] = tmp.raw[i] ^ l_ct->c1.raw[i];
   }
 
@@ -172,7 +177,7 @@ OQS_API int keypair(OUT unsigned char *pk, OUT unsigned char *sk)
   // Fill the secret key data structure with contents - cancel the padding
   l_sk.bin[0] = h0.val;
   l_sk.bin[1] = h1.val;
-  l_sk.pk     = h.val;
+  l_sk.pk = h.val;
 
   // Copy the data to the output buffers
   bike_memcpy(sk, &l_sk, sizeof(l_sk));
@@ -191,8 +196,8 @@ OQS_API int keypair(OUT unsigned char *pk, OUT unsigned char *sk)
 // Encapsulate - pk is the public key,
 //               ct is a key encapsulation message (ciphertext),
 //               ss is the shared secret.
-OQS_API int encaps(OUT unsigned char *     ct,
-                   OUT unsigned char *     ss,
+OQS_API int encaps(OUT unsigned char *ct,
+                   OUT unsigned char *ss,
                    IN const unsigned char *pk,
                    IN const unsigned char *message)
 {
@@ -208,12 +213,12 @@ OQS_API int encaps(OUT unsigned char *     ct,
   // Copy the data from the input buffer. This is required in order to avoid
   // alignment issues on non x86_64 processors.
   bike_memcpy(&l_pk, pk, sizeof(l_pk));
-  //fprintf(stdout, "Crystal Kyber start\n");
-  //fprintBstr(stdout, "message = ", message, 32);
+  // fprintf(stdout, "Crystal Kyber start\n");
+  fprintBstr(stdout, "message = ", message, 32);
   get_seeds(&seeds);
 
   // e = H(m) = H(seed[0])
-  //convert_seed_to_m_type(&m, &seeds.seed[0]);
+  // convert_seed_to_m_type(&m, &seeds.seed[0]);
   convert_seed_to_m_type(&m, &message);
   GUARD(function_h(&e, &m, &l_pk));
   // fprintf(stdout, e.val[0].val.raw);
@@ -237,9 +242,9 @@ OQS_API int encaps(OUT unsigned char *     ct,
 // Decapsulate - ct is a key encapsulation message (ciphertext),
 //               sk is the private key,
 //               ss is the shared secret
-OQS_API int decaps(OUT unsigned char *     ss,
+OQS_API int decaps(OUT unsigned char *ss,
                    IN const unsigned char *ct,
-                   IN const unsigned char *sk, 
+                   IN const unsigned char *sk,
                    OUT unsigned char *message)
 {
   unsigned char *tmp = NULL;
@@ -282,7 +287,8 @@ OQS_API int decaps(OUT unsigned char *     ss,
 
   // Compute either K(m', C) or K(sigma, C) based on the success condition
   uint32_t mask = secure_l32_mask(0, success_cond);
-  for(size_t i = 0; i < M_BYTES; i++) {
+  for (size_t i = 0; i < M_BYTES; i++)
+  {
     m_prime.raw[i] &= u8_barrier(~mask);
     m_prime.raw[i] |= (u8_barrier(mask) & l_sk.sigma.raw[i]);
   }
@@ -292,9 +298,11 @@ OQS_API int decaps(OUT unsigned char *     ss,
 
   // Copy the data into the output buffer
   bike_memcpy(ss, &l_ss, sizeof(l_ss));
+
   bike_memcpy(message, tmp, 32);
-  
-  //bike_memcpy((message+0x10), m_prime.raw, sizeof(m_prime));
+  bike_memcpy(message, &m_prime, 32);
+
+  // bike_memcpy((message+0x10), m_prime.raw, sizeof(m_prime));
   free(tmp);
   tmp = NULL;
   return SUCCESS;

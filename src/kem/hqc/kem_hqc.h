@@ -28,7 +28,7 @@ OQS_API OQS_STATUS OQS_KEM_hqc_192_decaps(uint8_t *shared_secret, const uint8_t 
 #endif
 
 #ifdef OQS_ENABLE_KEM_hqc_256
-// #define OQS_KEM_hqc_256_length_plaintext 32
+#define OQS_KEM_hqc_256_length_plaintext 32
 #define OQS_KEM_hqc_256_length_public_key 7245
 #define OQS_KEM_hqc_256_length_secret_key 7285
 #define OQS_KEM_hqc_256_length_ciphertext 14469
@@ -40,4 +40,3 @@ OQS_API OQS_STATUS OQS_KEM_hqc_256_decaps(uint8_t *shared_secret, const uint8_t 
 #endif
 
 #endif
-
