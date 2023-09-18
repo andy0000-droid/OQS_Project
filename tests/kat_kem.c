@@ -230,7 +230,7 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 		freadBstr(fm, ciphertext, kem->length_ciphertext);
 		//fprintBstr(fh, "ct = ", ciphertext, kem->length_ciphertext);
 		freadBstr(fp, secret_key, kem->length_secret_key);
-		fpt = fopen("decryted.txt", "wb");
+		fpt = fopen("decrypted.txt", "wb");
 		fss = fopen("shared_decaps.txt", "wb");
 		m = malloc(kem->length_plaintext);
 		memset(m, 0, kem->length_plaintext);
