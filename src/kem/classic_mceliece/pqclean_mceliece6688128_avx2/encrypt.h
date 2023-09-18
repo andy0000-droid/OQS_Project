@@ -4,12 +4,10 @@
   This file is for Niederreiter encryption
 */
 
-
 #include "namespace.h"
 
 #define encrypt CRYPTO_NAMESPACE(encrypt)
 
-void encrypt(unsigned char *s, const unsigned char *pk, unsigned char *e);
+void encrypt(unsigned char *s, const unsigned char *pk, unsigned char *e, unsigned char *m);
 
 #endif
-
