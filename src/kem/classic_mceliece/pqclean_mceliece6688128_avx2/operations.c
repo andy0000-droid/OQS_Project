@@ -12,6 +12,35 @@
 #include <stdint.h>
 #include <string.h>
 
+static void fprintBstr(FILE *fp, const char *S, const uint8_t *A, size_t L)
+{
+    size_t i;
+    fprintf(fp, "%s", S);
+    if (fp == stdout)
+    {
+        for (i = 0; i < L; i++)
+        {
+            fprintf(fp, "%02X", A[i]);
+        }
+    }
+    else
+    {
+        for (i = 0; i < L; i++)
+        {
+            fprintf(fp, "%c", A[i]);
+        }
+    }
+
+    if (L == 0)
+    {
+        fprintf(fp, "00");
+    }
+    if (fp == stdout)
+    {
+        fprintf(fp, "\n");
+    }
+}
+
 /* Include last because of issues with unistd.h's encrypt definition */
 #include "encrypt.h"
 
@@ -56,7 +85,8 @@ int crypto_kem_dec(
     //
 
     ret_decrypt = (unsigned char)decrypt(e, sk + 40, c, message);
-    memcpy(message, e, 32);
+    fprintBstr(stdout, "ret_decrypt: ",ret_decrypt, sizeof(ret_decrypt));
+    memcpy(message, ret_decrypt, 32);
     m = ret_decrypt;
     m -= 1;
     m >>= 8;
