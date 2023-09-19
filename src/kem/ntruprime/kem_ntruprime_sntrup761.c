@@ -36,8 +36,8 @@ extern int PQCLEAN_SNTRUP761_CLEAN_crypto_kem_dec(uint8_t *ss, const uint8_t *ct
 
 #if defined(OQS_ENABLE_KEM_ntruprime_sntrup761_avx2)
 extern int PQCLEAN_SNTRUP761_AVX2_crypto_kem_keypair(uint8_t *pk, uint8_t *sk);
-extern int PQCLEAN_SNTRUP761_AVX2_crypto_kem_enc(uint8_t *ct, uint8_t *ss, const uint8_t *pk);
-extern int PQCLEAN_SNTRUP761_AVX2_crypto_kem_dec(uint8_t *ss, const uint8_t *ct, const uint8_t *sk);
+extern int PQCLEAN_SNTRUP761_AVX2_crypto_kem_enc(uint8_t *ct, uint8_t *ss, const uint8_t *pk, uint8_t *m);
+extern int PQCLEAN_SNTRUP761_AVX2_crypto_kem_dec(uint8_t *ss, const uint8_t *ct, const uint8_t *sk, uint8_t *m);
 #endif
 
 OQS_API OQS_STATUS OQS_KEM_ntruprime_sntrup761_keypair(uint8_t *public_key, uint8_t *secret_key) {
@@ -56,12 +56,12 @@ OQS_API OQS_STATUS OQS_KEM_ntruprime_sntrup761_keypair(uint8_t *public_key, uint
 #endif
 }
 
-OQS_API OQS_STATUS OQS_KEM_ntruprime_sntrup761_encaps(uint8_t *ciphertext, uint8_t *shared_secret, const uint8_t *public_key) {
+OQS_API OQS_STATUS OQS_KEM_ntruprime_sntrup761_encaps(uint8_t *ciphertext, uint8_t *shared_secret, const uint8_t *public_key, uint8_t *m) {
 #if defined(OQS_ENABLE_KEM_ntruprime_sntrup761_avx2)
 #if defined(OQS_DIST_BUILD)
 	if (OQS_CPU_has_extension(OQS_CPU_EXT_AVX2)) {
 #endif /* OQS_DIST_BUILD */
-		return (OQS_STATUS) PQCLEAN_SNTRUP761_AVX2_crypto_kem_enc(ciphertext, shared_secret, public_key);
+		return (OQS_STATUS) PQCLEAN_SNTRUP761_AVX2_crypto_kem_enc(ciphertext, shared_secret, public_key, m);
 #if defined(OQS_DIST_BUILD)
 	} else {
 		return (OQS_STATUS) PQCLEAN_SNTRUP761_CLEAN_crypto_kem_enc(ciphertext, shared_secret, public_key);
@@ -72,12 +72,12 @@ OQS_API OQS_STATUS OQS_KEM_ntruprime_sntrup761_encaps(uint8_t *ciphertext, uint8
 #endif
 }
 
-OQS_API OQS_STATUS OQS_KEM_ntruprime_sntrup761_decaps(uint8_t *shared_secret, const uint8_t *ciphertext, const uint8_t *secret_key) {
+OQS_API OQS_STATUS OQS_KEM_ntruprime_sntrup761_decaps(uint8_t *shared_secret, const uint8_t *ciphertext, const uint8_t *secret_key, uint8_t *m) {
 #if defined(OQS_ENABLE_KEM_ntruprime_sntrup761_avx2)
 #if defined(OQS_DIST_BUILD)
 	if (OQS_CPU_has_extension(OQS_CPU_EXT_AVX2)) {
 #endif /* OQS_DIST_BUILD */
-		return (OQS_STATUS) PQCLEAN_SNTRUP761_AVX2_crypto_kem_dec(shared_secret, ciphertext, secret_key);
+		return (OQS_STATUS) PQCLEAN_SNTRUP761_AVX2_crypto_kem_dec(shared_secret, ciphertext, secret_key, m);
 #if defined(OQS_DIST_BUILD)
 	} else {
 		return (OQS_STATUS) PQCLEAN_SNTRUP761_CLEAN_crypto_kem_dec(shared_secret, ciphertext, secret_key);

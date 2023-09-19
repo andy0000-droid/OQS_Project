@@ -177,7 +177,7 @@ int PQCLEAN_SNTRUP761_AVX2_crypto_kem_keypair(uint8_t *pk, uint8_t *sk) {
     return 0;
 }
 
-int PQCLEAN_SNTRUP761_AVX2_crypto_kem_enc(uint8_t *c, uint8_t *k, const uint8_t *pk) {
+int PQCLEAN_SNTRUP761_AVX2_crypto_kem_enc(uint8_t *c, uint8_t *k, const uint8_t *pk, uint8_t *m) {
     unsigned char cache[Hash_bytes];
     int i;
     {
@@ -205,7 +205,7 @@ int PQCLEAN_SNTRUP761_AVX2_crypto_kem_enc(uint8_t *c, uint8_t *k, const uint8_t 
     return 0;
 }
 
-int PQCLEAN_SNTRUP761_AVX2_crypto_kem_dec(uint8_t *k, const uint8_t *c, const uint8_t *sk) {
+int PQCLEAN_SNTRUP761_AVX2_crypto_kem_dec(uint8_t *k, const uint8_t *c, const uint8_t *sk, uint8_t *m) {
     const unsigned char *pk = sk + SecretKeys_bytes;
     const unsigned char *rho = pk + PublicKeys_bytes;
     const unsigned char *cache = rho + Small_bytes;
