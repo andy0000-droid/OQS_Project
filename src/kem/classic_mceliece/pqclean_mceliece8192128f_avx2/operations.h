@@ -3,7 +3,6 @@
 
 #include "namespace.h"
 
-
 #include "crypto_kem.h"
 
 int crypto_kem_enc(
@@ -27,4 +26,3 @@ int crypto_kem_keypair
 );
 
 #endif
-

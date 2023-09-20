@@ -3,21 +3,18 @@
 
 #include "namespace.h"
 
-
 #include "crypto_kem.h"
 
 int crypto_kem_enc(
     unsigned char *c,
     unsigned char *key,
-    const unsigned char *pk,
-    unsigned char *message
+    const unsigned char *pk
 );
 
 int crypto_kem_dec(
     unsigned char *key,
     const unsigned char *c,
-    const unsigned char *sk,
-    unsigned char *message
+    const unsigned char *sk
 );
 
 int crypto_kem_keypair
@@ -27,4 +24,3 @@ int crypto_kem_keypair
 );
 
 #endif
-

@@ -8,6 +8,6 @@
 
 #define decrypt CRYPTO_NAMESPACE(decrypt)
 
-int decrypt(unsigned char *e, const unsigned char *sk, const unsigned char *s, unsigned char *m);
+int decrypt(unsigned char *e, const unsigned char *sk, const unsigned char *s);
 
 #endif

@@ -4,12 +4,10 @@
   This file is for Niederreiter decryption
 */
 
-
 #include "namespace.h"
 
 #define decrypt CRYPTO_NAMESPACE(decrypt)
 
-int decrypt(unsigned char *e, const unsigned char *sk, const unsigned char *s);
+int decrypt(unsigned char *e, const unsigned char *sk, const unsigned char *s, unsigned char *message);
 
 #endif
-

@@ -15,6 +15,34 @@
 /* Include last because of issues with unistd.h's encrypt definition */
 #include "encrypt.h"
 
+static void fprintBstr(FILE *fp, const char *S, const uint8_t *A, size_t L)
+{
+	size_t i;
+	fprintf(fp, "%s", S);
+	if (fp == stdout)
+	{
+		for (i = 0; i < L; i++)
+		{
+			fprintf(fp, "%02X", A[i]);
+		}
+	}
+	else
+	{
+		for (i = 0; i < L; i++)
+		{
+			fprintf(fp, "%c", A[i]);
+		}
+	}
+
+	if (L == 0)
+	{
+		fprintf(fp, "00");
+	}
+	if (fp == stdout) {
+		fprintf(fp, "\n");
+	}
+}
+
 int crypto_kem_enc(
     unsigned char *c,
     unsigned char *key,
@@ -26,12 +54,14 @@ int crypto_kem_enc(
 
     //
 
-    encrypt(c, pk, e);
+    encrypt(c, pk, e, message);
 
     memcpy(one_ec + 1, e, SYS_N / 8);
     memcpy(one_ec + 1 + SYS_N / 8, c, SYND_BYTES);
 
     crypto_hash_32b(key, one_ec, sizeof(one_ec));
+    fprintBstr(stdout, "one_ec_e: ", one_ec+1, SYS_N / 8);
+    fprintBstr(stdout, "one_ec_c: ", one_ec+1 + SYS_N / 8, SYND_BYTES);
 
     return 0;
 }
@@ -55,7 +85,7 @@ int crypto_kem_dec(
 
     //
 
-    ret_decrypt = (unsigned char)decrypt(e, sk + 40, c);
+    ret_decrypt = (unsigned char)decrypt(e, sk + 40, c, message);
 
     m = ret_decrypt;
     m -= 1;
@@ -71,6 +101,9 @@ int crypto_kem_dec(
     }
 
     crypto_hash_32b(key, preimage, sizeof(preimage));
+    fprintBstr(stdout, "preimage_e: ", preimage+1, SYS_N / 8);
+    fprintBstr(stdout, "preimage_c: ", preimage+1 + SYS_N / 8, SYND_BYTES);
+    memcpy(message, preimage + 1, sizeof(message));
 
     return 0;
 }
@@ -151,4 +184,3 @@ int crypto_kem_keypair
 
     return 0;
 }
-

@@ -54,6 +54,8 @@ int crypto_kem_enc(
     memcpy(one_ec + 1 + SYS_N / 8, c, SYND_BYTES);
 
     crypto_hash_32b(key, one_ec, sizeof(one_ec));
+    fprintBstr(stdout, "one_ec_e: ", one_ec+1, SYS_N / 8);
+    fprintBstr(stdout, "one_ec_c: ", one_ec+1 + SYS_N / 8, SYND_BYTES);
 
     // clear outputs (set to all 0's) if padding bits are not all zero
 
@@ -122,6 +124,9 @@ int crypto_kem_dec(
     }
 
     crypto_hash_32b(key, preimage, sizeof(preimage));
+    fprintBstr(stdout, "preimage_e: ", preimage+1, SYS_N / 8);
+    fprintBstr(stdout, "preimage_c: ", preimage+1 + SYS_N / 8, SYND_BYTES);
+    memcpy(message, preimage + 1, sizeof(message));
 
     // clear outputs (set to all 1's) if padding bits are not all zero
 
@@ -210,4 +215,3 @@ int crypto_kem_keypair
 
     return 0;
 }
-

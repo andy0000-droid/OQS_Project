@@ -168,7 +168,7 @@ static void reformat_256to128(vec128 *out, vec256 *in) {
 /*         s, ciphertext (syndrome) */
 /* output: e, error vector */
 /* return: 0 for success; 1 for failure */
-int decrypt(unsigned char *e, const unsigned char *sk, const unsigned char *s) {
+int decrypt(unsigned char *e, const unsigned char *sk, const unsigned char *s, unsigned char *message) {
     int i;
 
     uint16_t check_synd;
@@ -229,7 +229,5 @@ int decrypt(unsigned char *e, const unsigned char *sk, const unsigned char *s) {
 
     check_weight = weight_check(e, error128);
 
-
     return 1 - (check_synd & check_weight);
 }
-

@@ -8,6 +8,6 @@
 
 #define encrypt CRYPTO_NAMESPACE(encrypt)
 
-void encrypt(unsigned char *s, const unsigned char *pk, unsigned char *e, unsigned char *m);
+void encrypt(unsigned char *s, const unsigned char *pk, unsigned char *e);
 
 #endif

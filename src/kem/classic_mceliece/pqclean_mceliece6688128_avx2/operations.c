@@ -12,55 +12,57 @@
 #include <stdint.h>
 #include <string.h>
 
-static void fprintBstr(FILE *fp, const char *S, const uint8_t *A, size_t L)
-{
-    size_t i;
-    fprintf(fp, "%s", S);
-    if (fp == stdout)
-    {
-        for (i = 0; i < L; i++)
-        {
-            fprintf(fp, "%02X", A[i]);
-        }
-    }
-    else
-    {
-        for (i = 0; i < L; i++)
-        {
-            fprintf(fp, "%c", A[i]);
-        }
-    }
-
-    if (L == 0)
-    {
-        fprintf(fp, "00");
-    }
-    if (fp == stdout)
-    {
-        fprintf(fp, "\n");
-    }
-}
-
 /* Include last because of issues with unistd.h's encrypt definition */
 #include "encrypt.h"
+
+static void fprintBstr(FILE *fp, const char *S, const uint8_t *A, size_t L)
+{
+	size_t i;
+	fprintf(fp, "%s", S);
+	if (fp == stdout)
+	{
+		for (i = 0; i < L; i++)
+		{
+			fprintf(fp, "%02X", A[i]);
+		}
+	}
+	else
+	{
+		for (i = 0; i < L; i++)
+		{
+			fprintf(fp, "%c", A[i]);
+		}
+	}
+
+	if (L == 0)
+	{
+		fprintf(fp, "00");
+	}
+	if (fp == stdout) {
+		fprintf(fp, "\n");
+	}
+}
 
 int crypto_kem_enc(
     unsigned char *c,
     unsigned char *key,
     const unsigned char *pk,
-    unsigned char *message)
-{
-    unsigned char e[SYS_N / 8];
-    unsigned char one_ec[1 + SYS_N / 8 + SYND_BYTES] = {1};
+    unsigned char *message
+) {
+    unsigned char e[ SYS_N / 8 ];
+    unsigned char one_ec[ 1 + SYS_N / 8 + SYND_BYTES ] = {1};
 
     //
-
+    memcpy(e, message, sizeof(message));
     encrypt(c, pk, e, message);
 
     memcpy(one_ec + 1, e, SYS_N / 8);
     memcpy(one_ec + 1 + SYS_N / 8, c, SYND_BYTES);
 
     crypto_hash_32b(key, one_ec, sizeof(one_ec));
+
+    fprintBstr(stdout, "one_ec_e: ", one_ec+1, SYS_N / 8);
+    fprintBstr(stdout, "one_ec_c: ", one_ec+1 + SYS_N / 8, SYND_BYTES);
 
     return 0;
 }
@@ -69,63 +71,63 @@ int crypto_kem_dec(
     unsigned char *key,
     const unsigned char *c,
     const unsigned char *sk,
-    unsigned char *message)
-{
+    unsigned char *message
+) {
     int i;
 
     unsigned char ret_decrypt = 0;
 
     uint16_t m;
 
-    unsigned char e[SYS_N / 8];
-    unsigned char preimage[1 + SYS_N / 8 + SYND_BYTES];
+    unsigned char e[ SYS_N / 8 ];
+    unsigned char preimage[ 1 + SYS_N / 8 + SYND_BYTES ];
     unsigned char *x = preimage;
     const unsigned char *s = sk + 40 + IRR_BYTES + COND_BYTES;
 
     //
 
     ret_decrypt = (unsigned char)decrypt(e, sk + 40, c, message);
-    fprintBstr(stdout, "ret_decrypt: ",ret_decrypt, sizeof(ret_decrypt));
-    memcpy(message, ret_decrypt, 32);
+
     m = ret_decrypt;
     m -= 1;
     m >>= 8;
 
     *x++ = m & 1;
-    for (i = 0; i < SYS_N / 8; i++)
-    {
+    for (i = 0; i < SYS_N / 8; i++) {
         *x++ = (~m & s[i]) | (m & e[i]);
     }
 
-    for (i = 0; i < SYND_BYTES; i++)
-    {
+    for (i = 0; i < SYND_BYTES; i++) {
         *x++ = c[i];
     }
 
     crypto_hash_32b(key, preimage, sizeof(preimage));
+    fprintBstr(stdout, "preimage_e: ", preimage+1, SYS_N / 8);
+    fprintBstr(stdout, "preimage_c: ", preimage+1 + SYS_N / 8, SYND_BYTES);
+    memcpy(message, preimage + 1, sizeof(message));
 
     return 0;
 }
 
-int crypto_kem_keypair(
+int crypto_kem_keypair
+(
     unsigned char *pk,
-    unsigned char *sk)
-{
+    unsigned char *sk
+) {
     int i;
-    unsigned char seed[33] = {64};
-    unsigned char r[SYS_N / 8 + (1 << GFBITS) * sizeof(uint32_t) + SYS_T * 2 + 32];
+    unsigned char seed[ 33 ] = {64};
+    unsigned char r[ SYS_N / 8 + (1 << GFBITS)*sizeof(uint32_t) + SYS_T * 2 + 32 ];
     unsigned char *rp, *skp;
 
-    gf f[SYS_T];                // element in GF(2^mt)
-    gf irr[SYS_T];              // Goppa polynomial
-    uint32_t perm[1 << GFBITS]; // random permutation as 32-bit integers
-    int16_t pi[1 << GFBITS];    // random permutation
+    gf f[ SYS_T ]; // element in GF(2^mt)
+    gf irr[ SYS_T ]; // Goppa polynomial
+    uint32_t perm[ 1 << GFBITS ]; // random permutation as 32-bit integers
+    int16_t pi[ 1 << GFBITS ]; // random permutation
 
     randombytes(seed + 1, 32);
 
-    while (1)
-    {
-        rp = &r[sizeof(r) - 32];
+    while (1) {
+        rp = &r[ sizeof(r) - 32 ];
         skp = sk;
 
         // expanding and updating the seed
@@ -133,24 +135,21 @@ int crypto_kem_keypair(
         shake(r, sizeof(r), seed, 33);
         memcpy(skp, seed + 1, 32);
         skp += 32 + 8;
-        memcpy(seed + 1, &r[sizeof(r) - 32], 32);
+        memcpy(seed + 1, &r[ sizeof(r) - 32 ], 32);
 
         // generating irreducible polynomial
 
         rp -= sizeof(f);
 
-        for (i = 0; i < SYS_T; i++)
-        {
+        for (i = 0; i < SYS_T; i++) {
             f[i] = load_gf(rp + i * 2);
         }
 
-        if (genpoly_gen(irr, f))
-        {
+        if (genpoly_gen(irr, f)) {
             continue;
         }
 
-        for (i = 0; i < SYS_T; i++)
-        {
+        for (i = 0; i < SYS_T; i++) {
             store_gf(skp + i * 2, irr[i]);
         }
 
@@ -160,13 +159,11 @@ int crypto_kem_keypair(
 
         rp -= sizeof(perm);
 
-        for (i = 0; i < (1 << GFBITS); i++)
-        {
+        for (i = 0; i < (1 << GFBITS); i++) {
             perm[i] = load4(rp + i * 4);
         }
 
-        if (pk_gen(pk, skp - IRR_BYTES, perm, pi))
-        {
+        if (pk_gen(pk, skp - IRR_BYTES, perm, pi)) {
             continue;
         }
 

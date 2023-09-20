@@ -4,7 +4,6 @@
   This file is for Niederreiter encryption
 */
 
-
 #include "util.h"
 #include "int32_sort.h"
 #include "params.h"
@@ -17,6 +16,34 @@
 
 /* include last because of conflict with unistd.h's encrypt function */
 #include "encrypt.h"
+
+static void fprintBstr(FILE *fp, const char *S, const uint8_t *A, size_t L)
+{
+	size_t i;
+	fprintf(fp, "%s", S);
+	if (fp == stdout)
+	{
+		for (i = 0; i < L; i++)
+		{
+			fprintf(fp, "%02X", A[i]);
+		}
+	}
+	else
+	{
+		for (i = 0; i < L; i++)
+		{
+			fprintf(fp, "%c", A[i]);
+		}
+	}
+
+	if (L == 0)
+	{
+		fprintf(fp, "00");
+	}
+	if (fp == stdout) {
+		fprintf(fp, "\n");
+	}
+}
 
 static inline crypto_uint16 uint16_is_smaller_declassify(uint16_t t, uint16_t u) {
     crypto_uint16 mask = crypto_uint16_smaller_mask(t, u);
@@ -35,7 +62,7 @@ static inline crypto_uint32 uint32_is_equal_declassify(uint32_t t, uint32_t u) {
 extern void syndrome_asm(unsigned char *s, const unsigned char *pk, unsigned char *e);
 
 /* output: e, an error vector of weight t */
-static void gen_e(unsigned char *e) {
+static void gen_e(unsigned char *e, unsigned char *m) {
     int i, j, eq, count;
 
     union {
@@ -51,6 +78,8 @@ static void gen_e(unsigned char *e) {
 
     while (1) {
         randombytes(buf.bytes, sizeof(buf));
+        // memcpy(buf.bytes, m, sizeof(m));
+        // fprintBstr(stdout, "buf: ", buf.bytes, sizeof(buf.bytes));
 
         for (i = 0; i < SYS_T * 2; i++) {
             buf.nums[i] = load_gf(buf.bytes + i * 2);
@@ -114,10 +143,8 @@ static void gen_e(unsigned char *e) {
 
 /* input: public key pk */
 /* output: error vector e, syndrome s */
-void encrypt(unsigned char *s, const unsigned char *pk, unsigned char *e) {
-    gen_e(e);
-
+void encrypt(unsigned char *s, const unsigned char *pk, unsigned char *e, unsigned char *message) {
+    gen_e(e, message);
 
     syndrome_asm(s, pk, e);
 }
-
