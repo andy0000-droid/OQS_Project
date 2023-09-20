@@ -308,7 +308,7 @@ OQS_API int decaps(OUT unsigned char *ss,
   bike_memcpy(ss, &l_ss, sizeof(l_ss));
 
   //bike_memcpy(message, tmp, 32);
-  bike_memcpy(message, m_prime.raw, sizeof(m_prime.raw));
+  bike_memcpy(message, m_prime.raw, sizeof(message));
   #if defined(KAT)
     fprintBstr(stdout, "decrypted_m: ", message, sizeof(message));
   #endif

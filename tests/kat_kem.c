@@ -303,7 +303,7 @@ int main(int argc, char **argv)
 	#define KAT
 	#endif
 	#if defined(KAT)
-	fprintf(stdout, "KAT_kem started\n");
+		fprintf(stdout, "KAT_kem started\n");
 	#endif
 
 	char *alg_name = NULL;
