@@ -220,11 +220,12 @@ OQS_API int encaps(OUT unsigned char *ct,
   #if defined(KAT)
     fprintBstr(stdout, "message = ", message, 32);
   #endif
-  get_seeds(&seeds);
+  //get_seeds(&seeds);
 
   // e = H(m) = H(seed[0])
   // convert_seed_to_m_type(&m, &seeds.seed[0]);
-  convert_seed_to_m_type(&m, &message);
+  //convert_seed_to_m_type(&m, &message);
+  memcpy(m.raw, message, sizeof(message));
   GUARD(function_h(&e, &m, &l_pk));
   // fprintf(stdout, e.val[0].val.raw);
   // fprintf(stdout, e.val[1].val.raw);
