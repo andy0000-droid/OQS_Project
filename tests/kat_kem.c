@@ -299,6 +299,12 @@ cleanup:
 
 int main(int argc, char **argv)
 {
+	#ifndef KAT
+	#define KAT
+	#endif
+	#if defined(KAT)
+	fprintf(stdout, "KAT_kem started\n");
+	#endif
 
 	char *alg_name = NULL;
 	uint8_t *message = NULL;

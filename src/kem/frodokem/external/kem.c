@@ -105,7 +105,9 @@ OQS_STATUS crypto_kem_enc(unsigned char *ct, unsigned char *ss, const unsigned c
     // pkh <- G_1(pk), generate random mu, compute (seedSE || k) = G_2(pkh || mu)
     shake(pkh, BYTES_PKHASH, pk, CRYPTO_PUBLICKEYBYTES);
     randombytes(mu, BYTES_MU); // mu is message
+    #if defined(KAT)
     fprintBstr(stdout, "message: ", mu, sizeof(mu));
+    #endif
     shake(G2out, CRYPTO_BYTES + CRYPTO_BYTES, G2in, BYTES_PKHASH + BYTES_MU);
 
     // Generate Sp and Ep, and compute Bp = Sp*A + Ep. Generate A on-the-fly
@@ -210,7 +212,9 @@ OQS_STATUS crypto_kem_dec(unsigned char *ss, const unsigned char *ct, const unsi
     frodo_unpack(B, PARAMS_N*PARAMS_NBAR, pk_b, CRYPTO_PUBLICKEYBYTES - BYTES_SEED_A, PARAMS_LOGQ);
     frodo_mul_add_sb_plus_e(W, B, Sp, Epp);
     memcpy(message, muprime, sizeof(muprime));
+    #if defined(KAT)
     fprintBstr(stdout, "message: ", message, sizeof(message));
+    #endif
     // Encode mu, and compute CC = W + enc(mu') (mod q)
     frodo_key_encode(CC, (uint16_t*)muprime);
     frodo_add(CC, W, CC);

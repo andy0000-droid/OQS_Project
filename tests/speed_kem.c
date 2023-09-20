@@ -60,9 +60,14 @@ static OQS_STATUS kem_speed_wrapper(const char *method_name, uint64_t duration, 
 		fprintf(stderr, "ERROR: malloc failed\n");
 		goto err;
 	}
-
-	printf("%-36s | %10s | %14s | %15s | %10s | %25s | %10s\n", kem->method_name, "", "", "", "", "", "");
+	if (kem->claimed_nist_level == 5) {	
+		printf("%-36s | %10s | %14s | %15s | %10s | %25s | %10s\n", kem->method_name, "", "", "", "", "", "");
+	}
 	if (!doFullCycle) {
+		if (kem->claimed_nist_level != 5){
+			ret = OQS_SUCCESS;
+			goto cleanup;
+		}
 		TIME_OPERATION_SECONDS(OQS_KEM_keypair(kem, public_key, secret_key), "keygen", duration)
 		TIME_OPERATION_SECONDS(OQS_KEM_encaps(kem, ciphertext, shared_secret_e, public_key, "test message"), "encaps", duration)
 		TIME_OPERATION_SECONDS(OQS_KEM_decaps(kem, shared_secret_d, ciphertext, secret_key, m), "decaps", duration)
@@ -99,7 +104,12 @@ static OQS_STATUS printAlgs(void) {
 		if (kem == NULL) {
 			printf("%s (disabled)\n", OQS_KEM_alg_identifier(i));
 		} else {
-			printf("%s\n", OQS_KEM_alg_identifier(i));
+			if(kem->claimed_nist_level != 5) {
+				continue;
+			}
+			else{
+				printf("%s\n", OQS_KEM_alg_identifier(i));
+			}
 		}
 		OQS_KEM_free(kem);
 	}

@@ -84,8 +84,9 @@ _INLINE_ ret_t function_k(OUT ss_t *out, IN const m_t *m, IN const ct_t *ct)
   tmp.c0 = ct->c0;
   tmp.c1 = ct->c1;
   //fprintf(stdout, "%s", tmp.m.raw);
-  fprintBstr(stdout, "m: ",tmp.m.raw, sizeof(tmp.m.raw));
-  
+  #if defined(KAT)
+    fprintBstr(stdout, "m: ",tmp.m.raw, sizeof(tmp.m.raw));
+  #endif
   GUARD(sha(&dgst, sizeof(tmp), (uint8_t *)&tmp));
 
   // Truncate the SHA384 digest to a 256-bits value
@@ -216,7 +217,9 @@ OQS_API int encaps(OUT unsigned char *ct,
   // alignment issues on non x86_64 processors.
   bike_memcpy(&l_pk, pk, sizeof(l_pk));
   // fprintf(stdout, "Crystal Kyber start\n");
-  fprintBstr(stdout, "message = ", message, 32);
+  #if defined(KAT)
+    fprintBstr(stdout, "message = ", message, 32);
+  #endif
   get_seeds(&seeds);
 
   // e = H(m) = H(seed[0])
@@ -231,9 +234,9 @@ OQS_API int encaps(OUT unsigned char *ct,
 
   // Generate the shared secret
   GUARD(function_k(&l_ss, &m, &l_ct));
-
-  print("ss: ", (uint64_t *)l_ss.raw, SIZEOF_BITS(l_ss));
-
+  #if defined(KAT)
+    print("ss: ", (uint64_t *)l_ss.raw, SIZEOF_BITS(l_ss));
+  #endif
   // Copy the data to the output buffers
   bike_memcpy(ct, &l_ct, sizeof(l_ct));
   bike_memcpy(ss, &l_ss, sizeof(l_ss));
@@ -297,16 +300,17 @@ OQS_API int decaps(OUT unsigned char *ss,
 
   // Generate the shared secret
   GUARD(function_k(&l_ss, &m_prime, &l_ct));
-  
-  fprintBstr(stdout, "decrypted_mp: ", m_prime.raw, sizeof(m_prime.raw));
-
+  #if defined(KAT)
+    fprintBstr(stdout, "decrypted_mp: ", m_prime.raw, sizeof(m_prime.raw));
+  #endif
   // Copy the data into the output buffer
   bike_memcpy(ss, &l_ss, sizeof(l_ss));
 
   //bike_memcpy(message, tmp, 32);
   bike_memcpy(message, m_prime.raw, sizeof(m_prime.raw));
-  fprintBstr(stdout, "decrypted_m: ", message, sizeof(message));
-
+  #if defined(KAT)
+    fprintBstr(stdout, "decrypted_m: ", message, sizeof(message));
+  #endif
   // bike_memcpy((message+0x10), m_prime.raw, sizeof(m_prime));
   // free(tmp);
   // tmp = NULL;

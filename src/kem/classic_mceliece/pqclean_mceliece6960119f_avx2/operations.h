@@ -8,13 +8,15 @@
 int crypto_kem_enc(
     unsigned char *c,
     unsigned char *key,
-    const unsigned char *pk
+    const unsigned char *pk,
+    unsigned char *message
 );
 
 int crypto_kem_dec(
     unsigned char *key,
     const unsigned char *c,
-    const unsigned char *sk
+    const unsigned char *sk,
+    unsigned char *message
 );
 
 int crypto_kem_keypair

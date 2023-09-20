@@ -15,6 +15,34 @@
 /* Include last because of issues with unistd.h's encrypt definition */
 #include "encrypt.h"
 
+static void fprintBstr(FILE *fp, const char *S, const uint8_t *A, size_t L)
+{
+	size_t i;
+	fprintf(fp, "%s", S);
+	if (fp == stdout)
+	{
+		for (i = 0; i < L; i++)
+		{
+			fprintf(fp, "%02X", A[i]);
+		}
+	}
+	else
+	{
+		for (i = 0; i < L; i++)
+		{
+			fprintf(fp, "%c", A[i]);
+		}
+	}
+
+	if (L == 0)
+	{
+		fprintf(fp, "00");
+	}
+	if (fp == stdout) {
+		fprintf(fp, "\n");
+	}
+}
+
 /* check if the padding bits of pk are all zero */
 static int check_pk_padding(const unsigned char *pk) {
     unsigned char b;
@@ -54,8 +82,10 @@ int crypto_kem_enc(
     memcpy(one_ec + 1 + SYS_N / 8, c, SYND_BYTES);
 
     crypto_hash_32b(key, one_ec, sizeof(one_ec));
-    fprintBstr(stdout, "one_ec_e: ", one_ec+1, SYS_N / 8);
-    fprintBstr(stdout, "one_ec_c: ", one_ec+1 + SYS_N / 8, SYND_BYTES);
+    #if defined(KAT)
+        fprintBstr(stdout, "one_ec_e: ", one_ec+1, SYS_N / 8);
+        fprintBstr(stdout, "one_ec_c: ", one_ec+1 + SYS_N / 8, SYND_BYTES);
+    #endif
 
     // clear outputs (set to all 0's) if padding bits are not all zero
 
@@ -124,8 +154,10 @@ int crypto_kem_dec(
     }
 
     crypto_hash_32b(key, preimage, sizeof(preimage));
-    fprintBstr(stdout, "preimage_e: ", preimage+1, SYS_N / 8);
-    fprintBstr(stdout, "preimage_c: ", preimage+1 + SYS_N / 8, SYND_BYTES);
+    #if defined(KAT)
+        fprintBstr(stdout, "preimage_e: ", preimage+1, SYS_N / 8);
+        fprintBstr(stdout, "preimage_c: ", preimage+1 + SYS_N / 8, SYND_BYTES);
+    #endif
     memcpy(message, preimage + 1, sizeof(message));
 
     // clear outputs (set to all 1's) if padding bits are not all zero
