@@ -283,9 +283,12 @@ int decrypt(unsigned char *e, const unsigned char *sk, const unsigned char *s, u
 
     postprocess(e, error128);
 
-    fprintBstr(stdout, "error: ", e, sizeof(e));
+    //fprintBstr(stdout, "error: ", e, 32);
+    //memcpy(m, e, sizeof(m));
 
     check_weight = weight_check(e, error128);
+    fprintBstr(stdout, "weight: ", check_weight, sizeof(check_weight));
+    
 
     return 1 - (check_synd & check_weight);
 }

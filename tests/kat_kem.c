@@ -195,6 +195,7 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 		//memcpy(m, message, strlen(message));
 		
 		fprintBstr(fh, "initial message = ", m, kem->length_plaintext);
+		fprintf(fh, "size: %ld\n", kem->length_plaintext);
 		fct = fopen("cipher_text.txt", "wb");
 		fss = fopen("shared_secret.txt", "wb");
 
@@ -242,6 +243,8 @@ static OQS_STATUS kem_kat(const char *method_name, FILE *fm, const int device, F
 			fprintf(stderr, "[kat_kem] %s ERROR: OQS_KEM_decaps failed!\n", method_name);
 			goto err;
 		}
+		fprintBstr(fh, "decrypted: ", m, kem->length_plaintext);
+		fprintf(fh, "size: %ld %ld\n", sizeof(m), kem->length_plaintext);
 		//fprintBstr(fh, "shared_sercret: ", shared_secret_d, kem->length_shared_secret);
 		fprintBstr(fpt, "", m, kem->length_plaintext);
 		fprintBstr(fss, "", shared_secret_d, kem->length_shared_secret);

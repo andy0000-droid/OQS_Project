@@ -6,6 +6,21 @@
 
 #include <string.h>
 
+static void fprintBstr(FILE *fp, const char *S, const uint8_t *A, size_t L)
+{
+  size_t i;
+  fprintf(fp, "%s", S);
+  for (i = 0; i < L; i++)
+  {
+    fprintf(fp, "%02X", A[i]);
+  }
+  if (L == 0)
+  {
+    fprintf(fp, "00");
+  }
+  fprintf(fp, "\n");
+}
+
 OQS_STATUS crypto_kem_keypair(unsigned char* pk, unsigned char* sk)
 { // FrodoKEM's key generation
   // Outputs: public key pk (               BYTES_SEED_A + (PARAMS_LOGQ*PARAMS_N*PARAMS_NBAR)/8 bytes)
@@ -89,7 +104,8 @@ OQS_STATUS crypto_kem_enc(unsigned char *ct, unsigned char *ss, const unsigned c
 
     // pkh <- G_1(pk), generate random mu, compute (seedSE || k) = G_2(pkh || mu)
     shake(pkh, BYTES_PKHASH, pk, CRYPTO_PUBLICKEYBYTES);
-    randombytes(mu, BYTES_MU);
+    randombytes(mu, BYTES_MU); // mu is message
+    fprintBstr(stdout, "message: ", mu, sizeof(mu));
     shake(G2out, CRYPTO_BYTES + CRYPTO_BYTES, G2in, BYTES_PKHASH + BYTES_MU);
 
     // Generate Sp and Ep, and compute Bp = Sp*A + Ep. Generate A on-the-fly
@@ -193,7 +209,8 @@ OQS_STATUS crypto_kem_dec(unsigned char *ss, const unsigned char *ct, const unsi
     frodo_sample_n(Epp, PARAMS_NBAR*PARAMS_NBAR);
     frodo_unpack(B, PARAMS_N*PARAMS_NBAR, pk_b, CRYPTO_PUBLICKEYBYTES - BYTES_SEED_A, PARAMS_LOGQ);
     frodo_mul_add_sb_plus_e(W, B, Sp, Epp);
-
+    memcpy(message, muprime, sizeof(muprime));
+    fprintBstr(stdout, "message: ", message, sizeof(message));
     // Encode mu, and compute CC = W + enc(mu') (mod q)
     frodo_key_encode(CC, (uint16_t*)muprime);
     frodo_add(CC, W, CC);

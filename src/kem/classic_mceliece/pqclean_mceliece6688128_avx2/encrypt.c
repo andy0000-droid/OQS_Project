@@ -86,7 +86,8 @@ static void gen_e(unsigned char *e, unsigned char *m)
     while (1)
     {
         randombytes(buf.bytes, sizeof(buf));
-        memcpy(buf.bytes, m, sizeof(m));
+        // memcpy(buf.bytes, m, 32);
+        // fprintBstr(stdout, "buf: ", buf.bytes, sizeof(buf.bytes));
         // memcpy(buf.bytes, m, sizeof(m));
 
         fprintBstr(stdout, "Input message: ", buf.bytes, sizeof(buf));
@@ -167,6 +168,11 @@ static void gen_e(unsigned char *e, unsigned char *m)
 /* output: error vector e, syndrome s */
 void encrypt(unsigned char *s, const unsigned char *pk, unsigned char *e, unsigned char *m)
 {
-    gen_e(e, m);
-    syndrome_asm(s, pk, e);
+    // gen_e(e, m);
+    // fprintBstr(stdout, "message: ", m, sizeof(m));
+    // memcpy(e, m, sizeof(m));
+    // fprintBstr(stdout, "error: ", e, sizeof(e));
+    m = "test";
+
+    syndrome_asm(s, pk, m);
 }
