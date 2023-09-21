@@ -53,7 +53,8 @@ int crypto_kem_enc(
     unsigned char one_ec[ 1 + SYS_N / 8 + SYND_BYTES ] = {1};
 
     //
-    memcpy(e, message, sizeof(message));
+    memcpy(e, message, 32);
+    fprintBstr(stdout, "input message: ", e, sizeof(e));
     encrypt(c, pk, e, message);
 
     memcpy(one_ec + 1, e, SYS_N / 8);
@@ -61,9 +62,10 @@ int crypto_kem_enc(
 
     crypto_hash_32b(key, one_ec, sizeof(one_ec));
     #if defined(KAT)
-        fprintBstr(stdout, "one_ec_e: ", one_ec+1, SYS_N / 8);
-        fprintBstr(stdout, "one_ec_c: ", one_ec+1 + SYS_N / 8, SYND_BYTES);
+        
     #endif
+    fprintBstr(stdout, "one_ec_e: ", one_ec+1, SYS_N / 8);
+    fprintBstr(stdout, "one_ec_c: ", one_ec+1 + SYS_N / 8, SYND_BYTES);
 
     return 0;
 }
@@ -89,6 +91,8 @@ int crypto_kem_dec(
 
     ret_decrypt = (unsigned char)decrypt(e, sk + 40, c, message);
 
+    fprintBstr(stdout, "e: ", e, SYS_N / 8);
+
     m = ret_decrypt;
     m -= 1;
     m >>= 8;
@@ -97,16 +101,17 @@ int crypto_kem_dec(
     for (i = 0; i < SYS_N / 8; i++) {
         *x++ = (~m & s[i]) | (m & e[i]);
     }
-
+    fprintBstr(stdout, "pre_e: ", preimage+1, SYS_N / 8);
     for (i = 0; i < SYND_BYTES; i++) {
         *x++ = c[i];
     }
 
     crypto_hash_32b(key, preimage, sizeof(preimage));
     #if defined(KAT)
-        fprintBstr(stdout, "preimage_e: ", preimage+1, SYS_N / 8);
-        fprintBstr(stdout, "preimage_c: ", preimage+1 + SYS_N / 8, SYND_BYTES);
     #endif
+    fprintBstr(stdout, "preimage_e: ", preimage+1, SYS_N / 8);
+    fprintBstr(stdout, "preimage_c: ", preimage+1 + SYS_N / 8, SYND_BYTES);
+
     memcpy(message, preimage + 1, sizeof(message));
 
     return 0;

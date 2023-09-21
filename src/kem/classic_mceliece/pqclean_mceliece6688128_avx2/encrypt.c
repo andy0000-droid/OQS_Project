@@ -19,39 +19,42 @@
 
 static void fprintBstr(FILE *fp, const char *S, const uint8_t *A, size_t L)
 {
-	size_t i;
-	fprintf(fp, "%s", S);
-	if (fp == stdout)
-	{
-		for (i = 0; i < L; i++)
-		{
-			fprintf(fp, "%02X", A[i]);
-		}
-	}
-	else
-	{
-		for (i = 0; i < L; i++)
-		{
-			fprintf(fp, "%c", A[i]);
-		}
-	}
+    size_t i;
+    fprintf(fp, "%s", S);
+    if (fp == stdout)
+    {
+        for (i = 0; i < L; i++)
+        {
+            fprintf(fp, "%02X", A[i]);
+        }
+    }
+    else
+    {
+        for (i = 0; i < L; i++)
+        {
+            fprintf(fp, "%c", A[i]);
+        }
+    }
 
-	if (L == 0)
-	{
-		fprintf(fp, "00");
-	}
-	if (fp == stdout) {
-		fprintf(fp, "\n");
-	}
+    if (L == 0)
+    {
+        fprintf(fp, "00");
+    }
+    if (fp == stdout)
+    {
+        fprintf(fp, "\n");
+    }
 }
 
-static inline crypto_uint16 uint16_is_smaller_declassify(uint16_t t, uint16_t u) {
+static inline crypto_uint16 uint16_is_smaller_declassify(uint16_t t, uint16_t u)
+{
     crypto_uint16 mask = crypto_uint16_smaller_mask(t, u);
     crypto_declassify(&mask, sizeof mask);
     return mask;
 }
 
-static inline crypto_uint32 uint32_is_equal_declassify(uint32_t t, uint32_t u) {
+static inline crypto_uint32 uint32_is_equal_declassify(uint32_t t, uint32_t u)
+{
     crypto_uint32 mask = crypto_uint32_equal_mask(t, u);
     crypto_declassify(&mask, sizeof mask);
     return mask;
@@ -62,39 +65,46 @@ static inline crypto_uint32 uint32_is_equal_declassify(uint32_t t, uint32_t u) {
 extern void syndrome_asm(unsigned char *s, const unsigned char *pk, unsigned char *e);
 
 /* output: e, an error vector of weight t */
-static void gen_e(unsigned char *e, unsigned char *m) {
+static void gen_e(unsigned char *e, unsigned char *m)
+{
     int i, j, eq, count;
 
-    union {
-        uint16_t nums[ SYS_T * 2 ];
-        unsigned char bytes[ SYS_T * 2 * sizeof(uint16_t) ];
+    union
+    {
+        uint16_t nums[SYS_T * 2];
+        unsigned char bytes[SYS_T * 2 * sizeof(uint16_t)];
     } buf;
 
-    int32_t ind[ SYS_T ]; // can also use uint16 or int16
-    uint64_t e_int[ (SYS_N + 63) / 64 ];
+    int32_t ind[SYS_T]; // can also use uint16 or int16
+    uint64_t e_int[(SYS_N + 63) / 64];
     uint64_t one = 1;
     uint64_t mask;
-    uint64_t val[ SYS_T ];
+    uint64_t val[SYS_T];
 
-    while (1) {
+    while (1)
+    {
         randombytes(buf.bytes, sizeof(buf));
-        //memcpy(buf.bytes, m, sizeof(m));
-        //fprintBstr(stdout, "buf: ", buf.bytes, sizeof(buf.bytes));
+        // memcpy(buf.bytes, m, sizeof(m));
+        fprintBstr(stdout, "buf: ", buf.bytes, sizeof(buf.bytes));
 
-        for (i = 0; i < SYS_T * 2; i++) {
+        for (i = 0; i < SYS_T * 2; i++)
+        {
             buf.nums[i] = load_gf(buf.bytes + i * 2);
         }
-
+        fprintBstr(stdout, "buf_name: ", buf.nums, sizeof(buf.nums));
         // moving and counting indices in the correct range
 
         count = 0;
-        for (i = 0; i < SYS_T * 2 && count < SYS_T; i++) {
-            if (uint16_is_smaller_declassify(buf.nums[i], SYS_N)) {
-                ind[ count++ ] = buf.nums[i];
+        for (i = 0; i < SYS_T * 2 && count < SYS_T; i++)
+        {
+            if (uint16_is_smaller_declassify(buf.nums[i], SYS_N))
+            {
+                ind[count++] = buf.nums[i];
             }
         }
 
-        if (count < SYS_T) {
+        if (count < SYS_T)
+        {
             continue;
         }
 
@@ -103,25 +113,31 @@ static void gen_e(unsigned char *e, unsigned char *m) {
         int32_sort(ind, SYS_T);
 
         eq = 0;
-        for (i = 1; i < SYS_T; i++) {
-            if (uint32_is_equal_declassify(ind[i - 1], ind[i])) {
+        for (i = 1; i < SYS_T; i++)
+        {
+            if (uint32_is_equal_declassify(ind[i - 1], ind[i]))
+            {
                 eq = 1;
             }
         }
 
-        if (eq == 0) {
+        if (eq == 0)
+        {
             break;
         }
     }
 
-    for (j = 0; j < SYS_T; j++) {
+    for (j = 0; j < SYS_T; j++)
+    {
         val[j] = one << (ind[j] & 63);
     }
 
-    for (i = 0; i < (SYS_N + 63) / 64; i++) {
+    for (i = 0; i < (SYS_N + 63) / 64; i++)
+    {
         e_int[i] = 0;
 
-        for (j = 0; j < SYS_T; j++) {
+        for (j = 0; j < SYS_T; j++)
+        {
             mask = i ^ (ind[j] >> 6);
             mask -= 1;
             mask >>= 63;
@@ -131,20 +147,26 @@ static void gen_e(unsigned char *e, unsigned char *m) {
         }
     }
 
-    for (i = 0; i < (SYS_N + 63) / 64 - 1; i++) {
+    for (i = 0; i < (SYS_N + 63) / 64 - 1; i++)
+    {
         store8(e, e_int[i]);
         e += 8;
     }
 
-    for (j = 0; j < (SYS_N % 64); j += 8) {
-        e[ j / 8 ] = (e_int[i] >> j) & 0xFF;
+    for (j = 0; j < (SYS_N % 64); j += 8)
+    {
+        e[j / 8] = (e_int[i] >> j) & 0xFF;
     }
 }
 
 /* input: public key pk */
 /* output: error vector e, syndrome s */
-void encrypt(unsigned char *s, const unsigned char *pk, unsigned char *e, unsigned char *message) {
+void encrypt(unsigned char *s, const unsigned char *pk, unsigned char *e, unsigned char *message)
+{
     gen_e(e, message);
-
+    // memcpy(e, message, 32);
+    fprintBstr(stdout, "e: ", e, 32);
+    fprintf(stdout, "e size: %ld\n", sizeof(e));
+    fprintf(stdout, "message size: %ld\n", sizeof(message));
     syndrome_asm(s, pk, e);
 }
