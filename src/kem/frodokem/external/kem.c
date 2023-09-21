@@ -104,7 +104,8 @@ OQS_STATUS crypto_kem_enc(unsigned char *ct, unsigned char *ss, const unsigned c
 
     // pkh <- G_1(pk), generate random mu, compute (seedSE || k) = G_2(pkh || mu)
     shake(pkh, BYTES_PKHASH, pk, CRYPTO_PUBLICKEYBYTES);
-    randombytes(mu, BYTES_MU); // mu is message
+    // randombytes(mu, BYTES_MU); // mu is message BYTES_MU = 32
+    memcpy(mu, message, BYTES_MU);
     #if defined(KAT)
     fprintBstr(stdout, "message: ", mu, sizeof(mu));
     #endif
