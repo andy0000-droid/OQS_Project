@@ -85,13 +85,13 @@ static void gen_e(unsigned char *e, unsigned char *m)
     {
         randombytes(buf.bytes, sizeof(buf));
         // memcpy(buf.bytes, m, sizeof(m));
-        fprintBstr(stdout, "buf: ", buf.bytes, sizeof(buf.bytes));
+        // fprintBstr(stdout, "buf: ", buf.bytes, sizeof(buf.bytes));
 
         for (i = 0; i < SYS_T * 2; i++)
         {
             buf.nums[i] = load_gf(buf.bytes + i * 2);
         }
-        fprintBstr(stdout, "buf_name: ", buf.nums, sizeof(buf.nums));
+        // fprintBstr(stdout, "buf_name: ", buf.nums, sizeof(buf.nums));
         // moving and counting indices in the correct range
 
         count = 0;
@@ -165,8 +165,8 @@ void encrypt(unsigned char *s, const unsigned char *pk, unsigned char *e, unsign
 {
     gen_e(e, message);
     // memcpy(e, message, 32);
-    fprintBstr(stdout, "e: ", e, 32);
-    fprintf(stdout, "e size: %ld\n", sizeof(e));
-    fprintf(stdout, "message size: %ld\n", sizeof(message));
+    // fprintBstr(stdout, "e: ", e, 32);
+    // fprintf(stdout, "e size: %ld\n", sizeof(e));
+    // fprintf(stdout, "message size: %ld\n", sizeof(message));
     syndrome_asm(s, pk, e);
 }
