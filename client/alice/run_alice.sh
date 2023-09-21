@@ -13,7 +13,13 @@ docker exec -it client_a python3 /opt/socket/socket_client_alice.py public_key.t
 docker cp client_a:/opt/socket/public_key.txt ./shared # copy text file from docket to shared folder
 
 ./../kat_kem $KEM_ALG client_a plaintext.txt shared/public_key.txt # execute kat_kem for shared_secret & cipher
+res=$?
 
 mv cipher_text.txt shared/ # move cipher to shared folder
 docker cp ./shared/cipher_text.txt client_a:/opt/socket/
 docker exec -it client_a python3 /opt/socket/socket_client_bob.py quit
+if [ $res != 0 ]
+then
+    rm plaintext.txt
+    exit
+fi
