@@ -61,8 +61,8 @@ int crypto_kem_enc(
 
     crypto_hash_32b(key, one_ec, sizeof(one_ec));
     #if defined(KAT)
-        fprintBstr(stdout, "one_ec_e: ", one_ec+1, SYS_N / 8);
-        fprintBstr(stdout, "one_ec_c: ", one_ec+1 + SYS_N / 8, SYND_BYTES);
+        // fprintBstr(stdout, "one_ec_e: ", one_ec+1, SYS_N / 8);
+        // fprintBstr(stdout, "one_ec_c: ", one_ec+1 + SYS_N / 8, SYND_BYTES);
     #endif
 
     return 0;
@@ -104,8 +104,8 @@ int crypto_kem_dec(
 
     crypto_hash_32b(key, preimage, sizeof(preimage));
     #if defined(KAT)
-        fprintBstr(stdout, "preimage_e: ", preimage+1, SYS_N / 8);
-        fprintBstr(stdout, "preimage_c: ", preimage+1 + SYS_N / 8, SYND_BYTES);
+        // fprintBstr(stdout, "preimage_e: ", preimage+1, SYS_N / 8);
+        // fprintBstr(stdout, "preimage_c: ", preimage+1 + SYS_N / 8, SYND_BYTES);
     #endif
     memcpy(message, preimage + 1, sizeof(message));
 

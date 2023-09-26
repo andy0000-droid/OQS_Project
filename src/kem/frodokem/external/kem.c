@@ -107,7 +107,7 @@ OQS_STATUS crypto_kem_enc(unsigned char *ct, unsigned char *ss, const unsigned c
     // randombytes(mu, BYTES_MU); // mu is message BYTES_MU = 32
     memcpy(mu, message, BYTES_MU);
     #if defined(KAT)
-    fprintBstr(stdout, "message: ", mu, sizeof(mu));
+      // fprintBstr(stdout, "message: ", mu, sizeof(mu));
     #endif
     shake(G2out, CRYPTO_BYTES + CRYPTO_BYTES, G2in, BYTES_PKHASH + BYTES_MU);
 

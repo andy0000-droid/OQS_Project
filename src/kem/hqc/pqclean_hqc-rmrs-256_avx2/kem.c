@@ -84,8 +84,8 @@ int PQCLEAN_HQCRMRS256_AVX2_crypto_kem_enc(unsigned char *ct, unsigned char *ss,
     memset(m, 0, VEC_K_SIZE_BYTES);
     memcpy(m, message, VEC_K_SIZE_BYTES);
     #if defined(KAT)
-        fprintBstr(stdout, "Input messaege: ", m, VEC_K_SIZE_BYTES);
-        fprintBstr(stdout, "Input messaege: ", message, VEC_K_SIZE_BYTES);
+        // fprintBstr(stdout, "Input messaege: ", m, VEC_K_SIZE_BYTES);
+        // fprintBstr(stdout, "Input messaege: ", message, VEC_K_SIZE_BYTES);
     #endif
     // Computing theta
     sha3_512(theta, m, VEC_K_SIZE_BYTES);
@@ -146,7 +146,7 @@ int PQCLEAN_HQCRMRS256_AVX2_crypto_kem_dec(unsigned char *ss, const unsigned cha
     // Decryting
     PQCLEAN_HQCRMRS256_AVX2_hqc_pke_decrypt(m, u, v, sk);
     #if defined(KAT)
-        fprintBstr(stdout, "decrypted: ", m, sizeof(m));
+        // fprintBstr(stdout, "decrypted: ", m, sizeof(m));
     #endif
     memcpy(message, m, 32);
 

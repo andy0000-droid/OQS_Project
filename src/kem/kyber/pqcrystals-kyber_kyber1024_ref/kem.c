@@ -69,7 +69,7 @@ int crypto_kem_enc(uint8_t *ct,
   uint8_t kr[2*KYBER_SYMBYTES];
 
   randombytes(buf, KYBER_SYMBYTES);
-  fprintBstr(stdout, "message", buf, 2*KYBER_SYMBYTES);
+    // fprintBstr(stdout, "message", buf, 2*KYBER_SYMBYTES);
   /* Don't release system RNG output */
   hash_h(buf, buf, KYBER_SYMBYTES);
 

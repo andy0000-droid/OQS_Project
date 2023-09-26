@@ -78,14 +78,14 @@ int crypto_kem_enc(uint8_t *ct,
   else {
     memcpy(buf, m, KYBER_SYMBYTES);
     #if defined(KAT)
-    fprintBstr(stdout, "Input message: ", buf, KYBER_SYMBYTES);
+    // fprintBstr(stdout, "Input message: ", buf, KYBER_SYMBYTES);
     #endif
   }
   // memcpy(buf, m, KYBER_SYMBYTES);
   /* Don't release system RNG output */
   hash_h(buf, buf, KYBER_SYMBYTES);
   #if defined(KAT)
-    fprintBstr(stdout, "hashed :", buf, KYBER_SYMBYTES);
+    // fprintBstr(stdout, "hashed :", buf, KYBER_SYMBYTES);
   #endif
   /* Multitarget countermeasure for coins + contributory KEM */
   hash_h(buf+KYBER_SYMBYTES, pk, KYBER_PUBLICKEYBYTES);
