@@ -13,12 +13,13 @@ mv public_key.txt shared/
 
 
 docker cp shared/public_key.txt client_b:/opt/socket/
+start=`date +%s.%N`
 docker exec -it client_b python3 /opt/socket/socket_client_bob.py quit # send public key to alice
 docker exec -it client_b python3 /opt/socket/socket_client_alice.py cipher_text.txt quit # get cipher text from alice
 docker cp client_b:/opt/socket/cipher_text.txt ./shared
 
 #./../kat_kem $KEM_ALG client_b shared/cipher_text.txt secret_key.txt
-start=`date +%s.%N`
+
 ./../kat_kem $KEM_ALG client_b shared/cipher_text.txt secret_key.txt
 finish=`date +%s.%N`
 diff=$( echo "$finish - $start" | bc -l )
