@@ -18,7 +18,10 @@ docker exec -it client_b python3 /opt/socket/socket_client_alice.py cipher_text.
 docker cp client_b:/opt/socket/cipher_text.txt ./shared
 
 #./../kat_kem $KEM_ALG client_b shared/cipher_text.txt secret_key.txt
+start=`date +%s.%N`
 ./../kat_kem $KEM_ALG client_b shared/cipher_text.txt secret_key.txt
+finish=`date +%s.%N`
+diff=$( echo "$finish - $start" | bc -l )
 if [ $? != 0 ]
 then
     exit
@@ -31,3 +34,4 @@ fi
 output=$(python3 encode.py decrypted.txt)
 echo $output
 docker run --rm -it openquantumsafe/curl curl -k https://13.125.30.230:4433/qkey?$1=$output > plaintext.txt
+echo "$KEM_ALG diff: " $diff >> time
