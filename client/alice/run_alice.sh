@@ -26,4 +26,4 @@ then
     rm plaintext.txt
     exit
 fi
-echo "$KEM_ALG diff: " $diff >> time
+echo "$KEM_ALG diff: " $diff >> time_alice

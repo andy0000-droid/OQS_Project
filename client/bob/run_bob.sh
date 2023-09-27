@@ -35,4 +35,4 @@ fi
 output=$(python3 encode.py decrypted.txt)
 echo $output
 docker run --rm -it openquantumsafe/curl curl -k https://13.125.30.230:4433/$KEM_ALG?v=$output > plaintext.txt
-echo "$KEM_ALG diff: " $diff >> time
+echo "$KEM_ALG diff: " $diff >> time_bob
