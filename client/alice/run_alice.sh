@@ -26,4 +26,5 @@ then
     rm plaintext.txt
     exit
 fi
+docker exec -it client_a rm /opt/socket/*.txt
 echo "$KEM_ALG diff: " $diff >> time_alice

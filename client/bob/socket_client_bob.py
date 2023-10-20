@@ -10,8 +10,16 @@ client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
 # Connect to the server's address and port
 server_address = ('172.18.0.3', 12345)
-client_socket.connect(server_address)
-print('Connected to:', server_address)
+while True:
+    try:
+        client_socket.connect(server_address)
+        print('Connected to:', server_address)
+        break
+    except Exception as e:
+        os.system('clear')
+        print("Waiting server")
+        continue
+
 FLAG = False
 prefix = '/opt/socket/'
 i = 0
