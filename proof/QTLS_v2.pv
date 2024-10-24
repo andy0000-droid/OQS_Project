@@ -1,0 +1,22 @@
+free c: channel.
+free s: bitstring [private].
+
+fun aead_enc(bitstring, bitstring, bitstring): bitstring.
+fun aead_dec(bitstring, bitstring, bitstring): bitstring
+reduc forall n: bitstring, p: bitstring, ad: bitstring;
+    aead_dec(n, ad, aead_enc(n, ad, p)) = p.
+
+type Matrix.
+type vector.
+type skey.
+type pkey.
+type T.
+
+fun cal(Matrix, vector, vector): T.
+fun gensk(Matrix, T, vector, vector): skey [private].
+fun genpk(Matrix, T): pkey.
+fun pk2b(pkey): bitstring [data].
+fun sk2b(skey): bitstring [data].
+
+fun signing(skey, bitstring): bitstring.
+fun verifing(pkey, bitstring, bitstring): bitstring.

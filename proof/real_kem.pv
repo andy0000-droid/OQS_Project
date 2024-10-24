@@ -1,0 +1,72 @@
+free c: channel.
+free p: channel.
+
+type skey.
+type pkey.
+type qkey.
+type SharedSecret.
+type cipher.
+
+fun genskey(): skey [private].
+fun genpkey(): pkey.
+
+fun skey2b(skey): bitstring.
+fun pkey2b(pkey): bitstring.
+
+fun h(bitstring): bitstring.
+
+const qk: qkey.
+
+fun encapc(pkey, qkey): cipher.
+fun encapSharedSecret(pkey, qkey): SharedSecret [private].
+fun decap(skey, cipher): SharedSecret [private].
+fun decrypt(skey, cipher): qkey
+reduc forall pk: pkey, r: qkey, sk: skey;
+    decrypt(sk, encapc(pk, r)) = r.
+fun ss2b(SharedSecret): bitstring.
+
+equation forall pk: pkey, r: qkey, sk: skey;
+    decap(sk, encapc(pk, r)) = encapSharedSecret(pk, r).
+
+
+
+fun sign(bitstring, pkey): bitstring.
+reduc forall m: bitstring, k: pkey; checksign(sign(m,k), k) = m.
+
+free s: bitstring [private].
+query attacker(s).
+
+
+(*
+reduc forall k:pkey, r:qkey;
+    encap(k, r) = ??.
+
+reduc forall k:skey, m:msg;
+    decap(k, m) = ??.
+*)
+
+type result.
+const done: result.
+
+let alice() = 
+    in(c, pk:pkey);
+        out(c, encapc(pk, qk));
+    let ss = encapSharedSecret(pk, qk) in 
+    out(c, sign(ss2b(ss), pk)).
+    
+let bob(pk: pkey, sk: skey) = 
+    in(c, cp:cipher);
+    let ss = decap(sk, cp) in
+    in(c, hss:bitstring);
+    let css = checksign(hss, pk) in
+    if css = hss then
+        out(c, done);
+    let d = done in 0.
+
+process(
+    let pk = genpkey() in
+    out(c, pk);
+    let sk = genskey() in
+    !alice() | !bob(pk, sk)
+)
+

@@ -30,8 +30,9 @@ reduc forall k:ae_key, n:bitstring, ad:bitstring, x:bitstring;
 
 (********************************************************)
 (* Diffie-Hellman with small/bad subgroup attacks. See Logjam, Cross-Protocol *)
+(* Need to fix from DH to Dilithium*)
 (********************************************************)
-
+(* DH implementation
 type group.
 const StrongDH: group [data].
 const WeakDH: group [data].
@@ -58,6 +59,23 @@ letfun dh_keygen(g:group) =
        new x:bitstring;
        let gx = dh_exp(g,G,x) in
        (x,gx).
+*)
+(* Dilithium *)
+type Matrix.
+type vector.
+type skey.
+type pkey.
+type T.
+
+fun cal(Matrix, vector, vector): T.
+fun gensk(Matrix, T, vector, vector): skey [private].
+fun genpk(Matrix, T): pkey.
+fun pk2b(pkey): bitstring [data].
+fun sk2b(skey): bitstring [data].
+
+fun signing(skey, bitstring): bitstring.
+fun verifing(pkey, bitstring, bitstring): bitstring.
+
 
 (********************************************************)
 (* Hash Functions, including those with collisions. See SLOTH *)
@@ -111,7 +129,8 @@ reduc forall k:privkey, x:bitstring;
 
 (********************************************************)
 (* Public Key Encryption with decryption and signing oracle *)
-(* for weak decrytion algorithsm (PKCS1). See DROWN/Bleichenbacher *) 
+(* for weak decrytion algorithsm (PKCS1). See DROWN/Bleichenbacher *)
+(* Need to fix from RSA to Kyber*) 
 (********************************************************)
 
 type rsa_alg.
@@ -129,6 +148,8 @@ reduc forall k:privkey, x:bitstring;
       rsa_dec(StrongRSADecryption,k,rsa_enc(pk(k),x)) = success(x,zero)
 otherwise forall k:privkey, x:bitstring;
       rsa_dec(WeakRSADecryption,k,rsa_enc(pk(k),x)) = success(x,(x,sign(k,x))).
+
+(* Kyber *)
 
 
 (********************************************************)
@@ -276,17 +297,18 @@ letfun kdf_psk(ms:bitstring, log:bitstring) =
 type random.
 type version.
 const TLS12, TLS13: version.
-type kex_alg.
-fun RSA(rsa_alg):kex_alg [data].
-fun DHE(group):kex_alg [data].
-fun DHE_13(group,element): kex_alg [data].
+(*type .
+fun RSA(rsa_alg): [data].
+fun DHE(group): [data].
+fun DHE_13(group,element):  [data].
+*)
 
 type psk_type.
 fun Binder(bitstring): psk_type [data].
 fun NoBinder(): psk_type [data].
 
 type params.
-fun nego(version,kex_alg,hash_alg,ae_alg,psk_type): params [data].
+fun nego(version,hash_alg,ae_alg,psk_type): params [data].
 
 type msg.
 fun msg2bytes(msg):bitstring [data,typeConverter].
@@ -299,7 +321,6 @@ fun CV(bitstring):msg [data].
 fun FIN(bitstring):msg [data].
 
 event ClientOffersVersion(random,version).
-event ClientOffersKEX(random,kex_alg).
 event ClientOffersAE(random,ae_alg).
 event ClientOffersHash(random,hash_alg).
 
@@ -312,7 +333,6 @@ event ClientFinished0(version,random,preSharedKey,
   		      params,ae_key,bitstring).
 
 event ServerChoosesVersion(random,random,pubkey,version).
-event ServerChoosesKEX(random,random,pubkey,version,kex_alg).
 event ServerChoosesAE(random,random,pubkey,version,ae_alg).
 event ServerChoosesHash(random,random,pubkey,version,hash_alg).
 
